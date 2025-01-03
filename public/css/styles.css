@@ -1,0 +1,688 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /*font-family: Inter,sans-serif;*/
+    font-family: 'League Spartan', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    min-width: 435.2px;
+    background: #d1d468;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+}
+
+.main-content {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    /*grid-template-rows: minmax(100px, 15%) minmax(70px, 10%) minmax(260px, 30%) auto;*/
+    grid-template-rows: 100px 70px 230px;
+    justify-content: center;
+    align-items: center;
+    background-color: #d1d468;
+    z-index: 0;
+}
+
+.time-controller {
+    width: 110%;
+    margin-left: -5%;
+    padding: 8px 0 0 8px;
+    grid-row: 3 / 4;
+    box-shadow: 0 0 20px rgba(36, 36, 36, 0.5); /* Sombra en el borde exterior */
+    background: linear-gradient(131deg, rgba(128,124,186,0.5971638655462185) 3%, rgba(199,200,165,1) 42%, rgba(209,212,104,1) 82%);
+    border-radius: 15px;
+    display: flex; /* O cualquier layout que necesites */
+    flex-direction: column; /* Acomoda los elementos dentro */
+    z-index: 5;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.div-3, .div-4 {
+    background-color: transparent;
+    border-radius: 15px;
+}
+/* Media query para pantallas pequeñas */
+@media (max-width: 768px) {
+    .main-content {
+        grid-template-rows: minmax(90px, 15%) minmax(90px, 15%) minmax(170px, 30%);
+        gap: 5px;
+    }
+}
+
+/* Media query para pantallas más pequeñas, como móviles */
+@media (max-width: 480px) {
+    .main-content {
+        grid-template-rows: minmax(90px, 15%) minmax(90px, 15%) minmax(170px, 30%);
+    }
+}
+
+
+.container-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 3px 0 25px 0;
+}
+
+.skip-button {
+    background-color: transparent;
+    border: none;
+    color: tint(#6c6969c8, 28%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px; /* Ajusta el tamaño del botón */
+    height: 30px; /* Para que sea un círculo */
+    border-radius: 50%; /* Hace que sea circular */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.skip-button:hover {
+    transform: translateY(-3px); /* Movimiento hacia arriba */
+    background-color: #ffffff1a; /* Efecto visual al pasar el mouse */
+}
+
+.add-task-button {
+    background-color: transparent;
+    border: none;
+    color: tint(#6c6969c8, 28%);
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.add-task-button:hover {
+    transform: translateY(-1px); /* Movimiento hacia arriba */
+    background-color: #ffffff1a; /* Efecto visual al pasar el mouse */
+}
+
+/* Estilos del reloj */
+#time {
+    display: flex;
+    gap: 35px;
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #time .circle {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12px;
+  }
+  
+  #time .circle svg {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    transform: rotate(270deg); /* Rota el círculo */
+  }
+  
+  #time .circle svg circle {
+    width: 100%;
+    height: 100%;
+    fill: transparent;
+    stroke-width: 5px;
+    stroke-linecap: round;
+    transform: translate(5px, 5px); /* Ajuste de posición */
+  }
+  
+  /* Primer círculo: fondo negro */
+  #time .circle svg circle:first-child {
+    stroke: #c2c2c2;
+  }
+  
+  /* Segundo círculo: progreso dinámico */
+  #time .circle svg circle:nth-child(2) {
+    stroke: var(--color); /* Color del progreso */
+    stroke-dasharray: 440; /* Longitud total del trazado */
+    stroke-dashoffset: 440; /* Oculta todo inicialmente */
+    transition: stroke-dashoffset 0.5s linear; /* Animación suave */
+  }
+  
+  #time div {
+    position: absolute;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  
+  #time div span {
+    position: absolute;
+    transform: translate(-50%, 0px);
+    font-size: 0.5rem;
+    font-weight: 300;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+  }
+  
+  #time .ap {
+    position: relative;
+    font-size: 1rem;
+    transform: translate(-20px);
+  }
+  
+  .dots {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  .dots::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    width: 15px;
+    height: 15px;
+    background: var(--color);
+    border-radius: 50%;
+    box-shadow: 0 0 30px var(--color), 0 0 80px var(--color);
+  }
+  
+  
+  #minutes, #seconds {
+    color: #111;
+  }
+
+/*Header*/
+/* Contenedor principal del header */
+.header-pomo {
+    width: 130%;
+    margin-left: -15%;
+    background-color: #d1d468; /* Fondo amarillo */
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distribuye logo y botones a los extremos */
+    border-bottom: 0.3px inset #bec162;
+    min-height: 80px;
+}
+
+/* Para el contenedor fluido */
+.container-fluid {
+    width: 100vw;
+    display: flex;
+    justify-content: space-between; /* Asegura que las secciones queden en extremos opuestos */
+    align-items: center;
+}
+
+/* Sección izquierda (logo) */
+.left-section {
+    flex: 1;
+}
+
+/* Logo */
+.pomotimer-logo img {
+    height: 50px; /* Mantiene la proporción */
+}
+
+/* Sección derecha (botones) */
+.right-section {
+    display: flex;
+    gap: 0.5em; /* Espaciado entre los botones */
+}
+
+/* Botones */
+.btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #2f363e; /* Fondo del botón */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #444b52; /* Color al pasar el mouse */
+}
+
+.tasks {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.rhomboid {
+    background-color: #F2E8A1;
+    width: 500px;
+    height: 250px;
+    transform: skewX(7deg);
+    margin-left: 10px;
+}
+
+/*Hasta aquí el header*/
+
+.button-56 {
+  align-items: center;
+  /*background-color: #fee6e3;*/
+  background-color: #FFFFFF;
+  border: 2px solid #111;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #111;
+  cursor: pointer;
+  display: flex;
+  /*font-family: Inter,sans-serif;*/
+  font-size: 18px;
+  height: 38px;
+  justify-content: center;
+  line-height: 24px;
+  max-width: 100%;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-56:after {
+  background-color: #111;
+  border-radius: 8px;
+  content: "";
+  display: block;
+  height: 38px;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform .2s ease-out;
+  z-index: -1;
+}
+
+.button-56:hover:after {
+  transform: translate(0, 0);
+}
+
+.button-56:active {
+  background-color: #c6bdbc;
+  outline: 0;
+}
+
+.button-56:hover {
+  outline: 0;
+}
+
+@media (min-width: 768px) {
+  .button-56 {
+    padding: 0 40px;
+  }
+}
+
+.todo-tasks {
+    position: absolute; /* Hace que el div quede fijo respecto a la ventana */
+    top: 430px;          /* Puedes ajustar la posición vertical */
+    width: 100vw;    /* Ocupa el 100% del ancho de la ventana */
+    display: grid;
+    height: 400px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.todo-title {
+    color: #F2E8A1;
+    height: 42px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.todo-img img {
+    height: 50px;
+}
+
+.add-todo {
+    height: 35px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.add-todo img {
+    height: 45px;
+    margin-top: -5px;
+}
+
+/*Play Stop Button*/
+.start-stop-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+/*Button by: Copyright (c) 2024 by Aaron Iker (https://codepen.io/aaroniker/pen/abzOdRR)*/
+.play-pause-button {
+    --play: #6D58FF;
+    --play-shadow: #{rgba(#6D58FF, .24)};
+    --pause: #2B3044;
+    --pause-shadow: #{rgba(#2B3044, .24)};
+    --color: #fff;
+    --icon: var(--color);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 20px;
+    font-size: 14px;
+    padding: 11px 12px 11px 30px;
+    border-radius: 22px;
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    backface-visibility: hidden;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    transform: translateY(var(--y, 0)) translateZ(0);
+    color: var(--color);
+    box-shadow: 0 var(--shadow-y, 6px) var(--shadow-b, 16px) var(--shadow, var(--pause-shadow));
+    background: radial-gradient(circle, var(--play) 0%, var(--play) 50%, var(--pause) 50.5%, var(--pause) 100%);
+    background-size: 400% 400%;
+    background-position: 0% 0%;
+    transition: background .8s, box-shadow .3s, transform .3s;
+    &:hover {
+        --y: -2px;
+        --shadow-y: 8px;
+        --shadow-b: 20px;
+    }
+    &:active {
+        --y: 1px;
+        --shadow-y: 4px;
+        --shadow-b: 12px;
+    }
+    &:before,
+    &:after {
+        content: '';
+        background: var(--icon);
+        width: var(--width, 16px);
+        height: 12px;
+        position: absolute;
+        left: 18px;
+        top: 15px;
+        backface-visibility: hidden;
+        transform-origin: 50% 100%;
+        transform: translateX(var(--x, 0)) translateZ(0);
+        -webkit-clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+        clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+        transition: clip-path .6s ease;
+    }
+    &:after {
+        --width: 3px;
+        --x: 6px;
+    }
+    i {
+        display: block;
+        font-weight: bold;
+        font-style: normal;
+        backface-visibility: hidden;
+        opacity: var(--o, 1);
+        transform: translateX(var(--x, 0));
+        transition: transform .6s, opacity .6s;
+        &:nth-child(2) {
+            --o: 0;
+            --x: 0;
+        }
+        &:nth-child(3) {
+            --x: -50%;
+        }
+        &:nth-child(4) {
+            --o: 0;
+        }
+        &:last-child {
+            --x: -50%;
+        }
+    }
+    &.paused {
+        --shadow: var(--play-shadow);
+        animation: var(--name, background-paused) .8s ease forwards;
+        i {
+            &:first-child {
+                --x: 40%;
+            }
+            &:nth-child(2) {
+                --o: 1;
+                --x: 100%;
+            }
+            &:nth-child(3) {
+                --x: 50%;
+            }
+            &:nth-child(4) {
+                --o: 1;
+                --x: 50%;
+            }
+            &:last-child {
+                --x: 0;
+                --o: 0;
+            }
+        }
+        &:before {
+            -webkit-clip-path: polygon(0 0, 11px 6px, 11px 6px, 0 12px);
+            clip-path: polygon(0 0, 11px 6px, 11px 6px, 0 12px);
+            transition-delay: .9s;
+        }
+        &:after {
+            animation: to-play .9s ease forwards;
+        }
+        &.playing {
+            --shadow: var(--pause-shadow);
+            --name: background-playing;
+            &:before {
+                -webkit-clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+                clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+                transition-delay: 0s;
+            }
+            &:after {
+                animation: to-pause 1.3s ease forwards;
+            }
+            i {
+                &:first-child {
+                    --x: 0;
+                }
+                &:nth-child(2) {
+                    --o: 0;
+                    --x: 0;
+                }
+                &:nth-child(3) {
+                    --x: -50%;
+                    --o: 1;
+                }
+                &:nth-child(4) {
+                    --o: 0;
+                    --x: 0;
+                }
+                &:last-child {
+                    --x: -50%;
+                    --o: 1;
+                }
+            }
+        }
+    }
+}
+
+.todo-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #edeef0;
+    border-radius: 27px;
+    padding-left: 20px;
+    margin-bottom: 25px;
+    margin-top: 25px;
+
+}
+  
+.todo-body input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 10px 0;
+    font-size: 15px;
+}
+  
+.todo-body img {
+    cursor: pointer;
+    border-radius: 40px;
+    height: 55px;
+    width: 55px;
+    padding: 15px;
+    background: limegreen;
+}
+
+ul li {
+    list-style: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px;
+}
+  
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #edeef0;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+  
+h5 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: green;
+}
+  
+.todo-controls {
+    width: 25px;
+    height: 25px;
+    padding: 3px;
+    margin-right: 5px;
+}
+
+.input-setting {
+    width: 100%;
+}
+
+@keyframes to-play {
+    15% {
+        transform: translateX(6px) scaleY(1.1);
+    }
+    30% {
+        transform: translateX(6px) scaleY(.9);
+    }
+    45% {
+        transform: translateX(6px) scaleY(1.15);
+        -webkit-clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+        clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+        transform-origin: 50% 100%;
+    }
+    60%,
+    100% {
+        -webkit-clip-path: polygon(0 9px, 3px 9px, 3px 12px, 0 12px);
+        clip-path: polygon(0 9px, 3px 9px, 3px 12px, 0 12px);
+        transform-origin: 50% 10.5px;
+    }
+    60% {
+        transform: translateX(6px);
+    }
+    99% {
+        transform: translateX(0) rotate(-270deg);
+    }
+    100% {
+        transform: translateX(0) rotate(-270deg) scale(0);
+    }
+}
+
+@keyframes to-pause {
+    0%,
+    50% {
+        -webkit-clip-path: polygon(0 9px, 3px 9px, 3px 12px, 0 12px);
+        clip-path: polygon(0 9px, 3px 9px, 3px 12px, 0 12px);
+        transform-origin: 50% 10.5px;
+    }
+    0%,
+    39% {
+        transform: translateX(0) rotate(-270deg) scale(0);
+    }
+    40% {
+        transform: translateX(0) rotate(-270deg);
+    }
+    50% {
+        transform: translateX(6px) rotate(0deg);
+    }
+    60%,
+    100% {
+        transform: translateX(6px);
+        -webkit-clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+        clip-path: polygon(0 0, 3px 0, 3px 12px, 0 12px);
+        transform-origin: 50% 100%;
+    }
+    70% {
+        transform: translateX(6px) scaleY(1.15);
+    }
+    80% {
+        transform: translateX(6px) scaleY(.9);
+    }
+    90% {
+        transform: translateX(6px) scaleY(1.05);
+    }
+    100% {
+        transform: translateX(6px);
+    }
+}
+
+@keyframes background-paused {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 50% 50%;
+    }
+}
+
+@keyframes background-playing {
+    from {
+        background-position: 50% 50%;
+    }
+    to {
+        background-position: 100% 100%;
+    }
+}
+
+/*Media queries*/
+@media (max-width: 768px) {
+    .header-pomo {
+        width: 100%; /* Reduce el ancho en pantallas pequeñas */
+        margin-left: 0; /* Elimina el desplazamiento */
+    }
+}
+

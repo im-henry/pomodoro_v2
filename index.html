@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=435.2, initial-scale=1.0, minimum-scale=1.0">
+    <title>Pomodoro Henry :)</title>
+    <link href="public/css/styles.css" rel="stylesheet">
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700&display=swap" rel="stylesheet">
+  </head>
+<body>
+
+<div class="main-content">
+    <nav class="header-pomo">
+        <div class="container-fluid">
+            <div class="left-section">
+                <a class="pomotimer-logo" href="">
+                    <img src="public/images/pomotimer.jpg" alt="Logo">
+                </a>
+            </div>
+            <div class="right-section">
+                <button id="modal-pomosettings" class="btn" data-bs-toggle="modal" data-bs-target="#pomo-settings">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button class="btn">
+                    <i class="fa-solid fa-circle-user"></i> Login
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-buttons">
+        <button id="pomodoro" class="button-56 run-pomodoro" role="button">Pomodoro</button>
+        <button id="short-rest" class="button-56 run-short-rest" role="button">Short Rest</button>
+        <button id="long-rest" class="button-56 run-long-rest" role="button">Long Rest</button>
+    </div>
+
+    <div class="time-controller">
+        <!-- Círculos del reloj -->
+        <div id="time" class="div-3">
+            <div class="circle" style="--color: #6D58FF">
+                <div class="dots m_dot"></div>
+                <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle cx="70" cy="70" r="70" id="mm"></circle>
+                </svg>
+                <div id="minutes">25 min</div>
+            </div>
+            <div class="circle" style="--color: #6093ca">
+                <div class="dots s_dot"></div>
+                <svg>
+                    <circle cx="70" cy="70" r="70"></circle>
+                    <circle cx="70" cy="70" r="70" id="ss"></circle>
+                </svg>
+                <div id="seconds">00 sec</div>
+            </div>
+    </div>
+
+        <!-- Botones de control de tiempo-->
+        <!-- Button by: Copyright (c) 2024 by Aaron Iker (https://codepen.io/aaroniker/pen/abzOdRR)-->
+        <div class="start-stop-button div-4">
+            <button id='play-timer' class="play-pause-button paused">
+                <i>P</i>
+                <i>l</i>
+                <i>a</i>
+                <i>y</i>
+                <i>use</i>
+            </button>
+            <button class="skip-button media-button" label="skip">
+                <i class="fas fa-step-forward"></i>
+                <span class="button-text milli"></span>
+            </button>
+        </div> 
+    </div>
+
+    <div class="todo-tasks">
+        <div class="todo-title">
+            <a class="todo-img">
+                <img src="public/images/todo_tasks.png" alt="to-do tasks">
+            </a>
+        </div>
+        <div class="tasks rhomboid">
+            
+            <ul id="list-items" class="list-items"></ul>
+        </div>
+        <div class="add-todo">
+            <button class="add-task-button" data-bs-toggle="modal" data-bs-target="#todo-add">
+                <img src="public/images/add-task.png" alt="add task">
+            </button>
+        </div>
+        
+    </div>
+</div>
+    
+
+    <!-- Modal Settings Pomodoro-->
+    <div class="modal fade" id="pomo-settings" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Pomodoro Settings</h1>
+                <button id="close-settings" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <strong>POMODORO</strong>
+                <br>
+                <input id="focus-time-setting" type="text" class="input-setting">
+                <br>
+                <strong>SHORT REST</strong>
+                <br>
+                <input id="short-rest-setting" type="text" class="input-setting">
+                <br>
+                <strong>LONG REST</strong>
+                <br>
+                <input id="long-rest-setting" type="text" class="input-setting">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark set-time">Save</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    <!-- Modal Todo Tasks-->
+    <div class="modal fade" id="todo-add" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">To-do task</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <strong>Task</strong>
+                <br>
+                <input id="task-name" type="text" class="input-setting" placeholder="Add description...">
+                <br>
+                <br>
+                <strong>Est Pomodoros</strong>
+                <br>
+                <input id="est-pomodoro" type="number" class="input-setting" value="1">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark">Save</button>
+            </div>
+        </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="public/js/script.js"></script>
+
+</body>
+</html>
