@@ -32,7 +32,7 @@
     </nav>
 
     <div class="container-buttons">
-        <button id="pomodoro" class="button-56 run-pomodoro" role="button">Pomodoro</button>
+        <button id="pomodoro" class="button-56 run-pomodoro active" role="button">Pomodoro</button>
         <button id="short-rest" class="button-56 run-short-rest" role="button">Short Rest</button>
         <button id="long-rest" class="button-56 run-long-rest" role="button">Long Rest</button>
     </div>
@@ -81,8 +81,7 @@
                 <img src="public/images/todo_tasks.png" alt="to-do tasks">
             </a>
         </div>
-        <div class="tasks rhomboid">
-            
+        <div class="task-list rhomboid">
             <ul id="list-items" class="list-items"></ul>
         </div>
         <div class="add-todo">
@@ -90,7 +89,6 @@
                 <img src="public/images/add-task.png" alt="add task">
             </button>
         </div>
-        
     </div>
 </div>
     
@@ -142,11 +140,10 @@
                 <input id="est-pomodoro" type="number" class="input-setting" value="1">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark">Save</button>
+                <button id="save-task-btn" type="button" class="btn btn-dark">Save</button>
             </div>
         </div>
         </div>
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

@@ -205,7 +205,7 @@ body {
     box-shadow: 0 0 30px var(--color), 0 0 80px var(--color);
   }
   
-  #mm {
+  #mm, #ss {
     transition: stroke-dashoffset 0.3s linear;
   }
   
@@ -267,12 +267,6 @@ body {
     background-color: #444b52; /* Color al pasar el mouse */
 }
 
-.tasks {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-}
 
 .rhomboid {
     background-color: #F2E8A1;
@@ -281,6 +275,27 @@ body {
     height: 250px;
     transform: skewX(7deg);
     margin-left: 10px;
+}
+
+.task-list {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 20px;
+}
+
+#list-items {
+    list-style: none; /* Elimina los puntos de la lista */
+    padding: 0;
+    margin: 0;
+}
+
+#list-items li {
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /*Hasta aquí el header*/
@@ -586,12 +601,6 @@ li {
     border-radius: 5px;
 }
   
-h5 {
-    text-align: center;
-    margin-bottom: 10px;
-    color: green;
-}
-  
 .todo-controls {
     width: 25px;
     height: 25px;
@@ -601,6 +610,12 @@ h5 {
 
 .input-setting {
     width: 100%;
+}
+
+.task-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @keyframes to-play {
@@ -728,6 +743,4 @@ h5 {
         justify-content: center;
         align-items: center;
     }
-    
-
 }
