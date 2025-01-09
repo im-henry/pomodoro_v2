@@ -77,17 +77,17 @@
 
     <div class="todo-tasks">
         <div class="todo-title">
-            <a class="todo-img">
-                <img src="public/images/todo_tasks.png" alt="to-do tasks">
-            </a>
+            <h3>📖 To-do List</h3>
         </div>
-        <div class="task-list rhomboid">
-            <ul id="list-items" class="list-items"></ul>
-        </div>
-        <div class="add-todo">
-            <button class="add-task-button" data-bs-toggle="modal" data-bs-target="#todo-add">
-                <img src="public/images/add-task.png" alt="add task">
-            </button>
+        <div class="form">
+            <div class="new-task-form">
+                <label for="new-task">➕ Add a task</label>
+                <input id="new-task" autocomplete="off" type="text" placeholder="Try typing 'Buy tomatoes'" title="Click to start adding a task">
+                <button id="save-task-btn">➡️</button>
+            </div>
+            <ul id="tasks">
+                <li class="divider">Tasks</li>
+            </ul>
         </div>
     </div>
 </div>

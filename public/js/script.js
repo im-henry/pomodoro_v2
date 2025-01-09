@@ -234,59 +234,69 @@ function setMode(mode, time) {
 }
 
 /**To-Do List */
-const list = document.getElementById('list-items');
-const taskNameInput = document.getElementById('task-name');
-const estPomodoroInput = document.getElementById('est-pomodoro');
-const saveTaskButton = document.getElementById('save-task-btn');
+/** To-Do List */
+const list = document.getElementById('tasks'); // Actualizado a "tasks"
+const taskNameInput = document.getElementById('new-task'); // Campo de entrada actualizado
+const saveTaskButton = document.getElementById('save-task-btn'); // Botón actualizado
 
-//Function to store tasks on Local Storage
+// Función para guardar tareas en Local Storage
 function saveTasksToLocalStorage() {
     const tasks = [];
     document.querySelectorAll('.task-item').forEach(task => {
         const taskName = task.querySelector('strong').innerText;
-        const estPomodoros = task.querySelector('p').innerText.replace('Est. Pomodoros: ', '');
-        tasks.push({ taskName, estPomodoros });
+        tasks.push({ taskName });
     });
-    localStorage.setItem('tasks', JSON.stringify(tasks)); //Save as JSON in local storage
+    localStorage.setItem('tasks', JSON.stringify(tasks)); // Guardar como JSON en Local Storage
 }
 
-// Load tasks from Local Storage
+// Cargar tareas desde Local Storage
 function loadTasksFromLocalStorage() {
     const tasks = JSON.parse(localStorage.getItem('tasks'));
     if (tasks) {
-        tasks.forEach(({ taskName, estPomodoros }) => {
-            addTaskToList(taskName, estPomodoros);
+        tasks.forEach(({ taskName }) => {
+            addTaskToList(taskName);
         });
     }
 }
 
-// Add task to list and DOM
-function addTaskToList(taskName, estPomodoros) {
+// Añadir tarea a la lista y al DOM
+function addTaskToList(taskName) {
     const li = document.createElement('li');
     li.classList.add('task-item');
     li.innerHTML = `
         <strong>${taskName}</strong>
-        <p>Est. Pomodoros: ${estPomodoros}</p>
+        <button class="delete-task-btn">❌</button>
     `;
     list.appendChild(li);
+
+    // Añadir funcionalidad de eliminar tarea
+    li.querySelector('.delete-task-btn').addEventListener('click', () => {
+        li.remove();
+        saveTasksToLocalStorage();
+    });
 }
 
-// "Save Button" Event
+// Evento para el botón "Guardar tarea"
 saveTaskButton.addEventListener('click', () => {
     const taskName = taskNameInput.value.trim();
-    const estPomodoros = estPomodoroInput.value.trim();
 
     if (taskName !== '') {
-        addTaskToList(taskName, estPomodoros);
+        addTaskToList(taskName);
         saveTasksToLocalStorage();
-        taskNameInput.value = '';
-        estPomodoroInput.value = '1';
+        taskNameInput.value = ''; // Limpiar el campo de entrada
     } else {
         alert('Please enter a task description!');
     }
 });
 
-//Mutation observer to update localstorage
+// Evento para detectar "Enter" dentro de #new-task
+taskNameInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        saveTaskButton.click(); // Simula un clic en el botón
+    }
+});
+
+// Observer para detectar cambios en la lista y actualizar Local Storage
 const observerCallback = (mutationsList) => {
     for (const mutation of mutationsList) {
         if (mutation.type === 'childList') {
@@ -296,7 +306,7 @@ const observerCallback = (mutationsList) => {
 };
 
 const observer = new MutationObserver(observerCallback);
-observer.observe(list, {childList: true});
+observer.observe(list, { childList: true });
 
 // Cargar tareas al cargar la página
 document.addEventListener('DOMContentLoaded', loadTasksFromLocalStorage);

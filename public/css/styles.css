@@ -6,6 +6,15 @@
     font-family: 'League Spartan', sans-serif;
 }
 
+:root {
+    --background: #222;
+    --color: white;
+    --task-background: #333;
+    --task-hover-background: #444;
+    --task-completed-color: #ddd;
+    --delete-color: #eb4949;
+}
+
 html, body {
     height: 100%;
     margin: 0;
@@ -16,6 +25,7 @@ html, body {
 body {
     display: flex;
     height: 100vh;
+    --spacing: .5rem;
 }
 
 .main-content {
@@ -91,26 +101,11 @@ body {
 }
 
 .skip-button:hover {
-    transform: translateY(-3px); /* Movimiento hacia arriba */
-    background-color: #ffffff1a; /* Efecto visual al pasar el mouse */
+    transform: translateY(-3px);
+    background-color: #ffffff1a;
 }
 
-.add-task-button {
-    background-color: transparent;
-    border: none;
-    color: tint(#6c6969c8, 28%);
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    cursor: pointer;
-}
-
-.add-task-button:hover {
-    transform: translateY(-1px); /* Movimiento hacia arriba */
-    background-color: #ffffff1a; /* Efecto visual al pasar el mouse */
-}
-
-/* Estilos del reloj */
+/*Clock styles */
 #time {
     display: flex;
     gap: 35px;
@@ -133,7 +128,7 @@ body {
     position: relative;
     width: 150px;
     height: 150px;
-    transform: rotate(270deg); /* Rota el círculo */
+    transform: rotate(270deg);
   }
   
   #time .circle svg circle {
@@ -142,20 +137,19 @@ body {
     fill: transparent;
     stroke-width: 5px;
     stroke-linecap: round;
-    transform: translate(5px, 5px); /* Ajuste de posición */
+    transform: translate(5px, 5px);
   }
   
-  /* Primer círculo: fondo negro */
   #time .circle svg circle:first-child {
     stroke: #c2c2c2;
   }
   
   /* Segundo círculo: progreso dinámico */
   #time .circle svg circle:nth-child(2) {
-    stroke: var(--color); /* Color del progreso */
-    stroke-dasharray: 440; /* Longitud total del trazado */
-    stroke-dashoffset: 440; /* Oculta todo inicialmente */
-    transition: stroke-dashoffset 0.5s linear; /* Animación suave */
+    stroke: var(--color); 
+    stroke-dasharray: 440;
+    stroke-dashoffset: 440;
+    transition: stroke-dashoffset 0.5s linear;
   }
   
   #time div {
@@ -267,37 +261,6 @@ body {
     background-color: #444b52; /* Color al pasar el mouse */
 }
 
-
-.rhomboid {
-    background-color: #F2E8A1;
-    /*width: 500px;*/
-    width: 100%;
-    height: 250px;
-    transform: skewX(7deg);
-    margin-left: 10px;
-}
-
-.task-list {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    padding-right: 20px;
-}
-
-#list-items {
-    list-style: none; /* Elimina los puntos de la lista */
-    padding: 0;
-    margin: 0;
-}
-
-#list-items li {
-    padding: 10px;
-    margin-bottom: 5px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
 /*Hasta aquí el header*/
 
 .button-56 {
@@ -366,37 +329,88 @@ body {
     top: 430px;          /* Puedes ajustar la posición vertical */
     width: 100vw;    /* Ocupa el 100% del ancho de la ventana */
     display: grid;
+    grid-template-rows: 45px 300px;
     height: 400px;
-    background-color: #f4f4f4;
+    background-color: #222;
     padding: 20px;
     box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
     z-index: 1;
-    align-items: center;
+    align-items: top;
     text-align: center;
     justify-content: center;
+}
+
+.todo-tasks .form {
+    width: 100%;
+}
+
+.new-task-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing);
+    color: var(--color);
+    background: var(--task-background);
+    padding: calc(2* var(--spacing));
+    border-radius: calc(var(--spacing)/2);
+    width: 100%;
+    max-width: 50rem;
+    margin: 0 auto;
+}
+
+#save-task-btn {
+    background-color: #333;
+    height: 24px;
+    width: 24px;
 }
 
 .todo-title {
-    color: #F2E8A1;
-    height: 42px;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-}
-
-.todo-img img {
-    height: 50px;
-}
-
-.add-todo {
+    color: #fbfbfb;
     height: 35px;
     align-items: center;
     text-align: center;
     justify-content: center;
 }
-.add-todo img {
-    height: 45px;
-    margin-top: -5px;
+
+.todo-title h3 {
+    margin: 0;
+}
+
+#tasks {
+    padding: 0;
+}
+
+#tasks .divider {
+    justify-content: center;
+    padding-top: 5px
+}
+
+ul {
+    padding-top: 7px;
+}
+
+ul li {
+    list-style: none;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0px;
+    list-style-type: none;
+}
+  
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    background: #222;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.delete-task-btn {
+    background-color: #222;
+    height: 27px;
+    width: 27px;
 }
 
 /*Play Stop Button*/
@@ -555,67 +569,8 @@ body {
     }
 }
 
-.todo-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #edeef0;
-    border-radius: 27px;
-    padding-left: 20px;
-    margin-bottom: 25px;
-    margin-top: 25px;
-
-}
-  
-.todo-body input {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 10px 0;
-    font-size: 15px;
-}
-  
-.todo-body img {
-    cursor: pointer;
-    border-radius: 40px;
-    height: 55px;
-    width: 55px;
-    padding: 15px;
-    background: limegreen;
-}
-
-ul li {
-    list-style: none;
-    font-size: 18px;
-    cursor: pointer;
-    padding: 10px;
-}
-  
-li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #edeef0;
-    margin-bottom: 10px;
-    border-radius: 5px;
-}
-  
-.todo-controls {
-    width: 25px;
-    height: 25px;
-    padding: 3px;
-    margin-right: 5px;
-}
-
 .input-setting {
     width: 100%;
-}
-
-.task-list {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 @keyframes to-play {
@@ -737,10 +692,5 @@ li {
     .time-controller {
         width: 90%;
         margin-left: +5%;
-    }
-    .todo-tasks {
-        width: 100%;
-        justify-content: center;
-        align-items: center;
     }
 }
