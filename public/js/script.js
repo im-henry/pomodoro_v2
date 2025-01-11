@@ -234,7 +234,6 @@ function setMode(mode, time) {
 }
 
 /**To-Do List */
-/** To-Do List */
 const list = document.getElementById('tasks'); // Actualizado a "tasks"
 const taskNameInput = document.getElementById('new-task'); // Campo de entrada actualizado
 const saveTaskButton = document.getElementById('save-task-btn'); // Botón actualizado
@@ -243,7 +242,7 @@ const saveTaskButton = document.getElementById('save-task-btn'); // Botón actua
 function saveTasksToLocalStorage() {
     const tasks = [];
     document.querySelectorAll('.task-item').forEach(task => {
-        const taskName = task.querySelector('strong').innerText;
+        const taskName = task.querySelector('span').innerText;
         tasks.push({ taskName });
     });
     localStorage.setItem('tasks', JSON.stringify(tasks)); // Guardar como JSON en Local Storage
@@ -264,8 +263,10 @@ function addTaskToList(taskName) {
     const li = document.createElement('li');
     li.classList.add('task-item');
     li.innerHTML = `
-        <strong>${taskName}</strong>
-        <button class="delete-task-btn">❌</button>
+        <div class="task-content">
+            <span>${taskName}</span>
+            <button class="delete-task-btn">❌</button>
+        </div>
     `;
     list.appendChild(li);
 
@@ -310,3 +311,38 @@ observer.observe(list, { childList: true });
 
 // Cargar tareas al cargar la página
 document.addEventListener('DOMContentLoaded', loadTasksFromLocalStorage);
+
+/** Función que ajusta la posición de #pomotimer-article */
+function adjustPomotimerPosition() {
+    const todoTasks = document.querySelector('.todo-tasks');
+    const pomotimerArticle = document.querySelector('#pomotimer-article');
+    
+    // Obtener la altura de .todo-tasks
+    const todoTasksHeight = todoTasks.offsetHeight;
+    
+    // Si la altura de .todo-tasks es mayor que 300px, ajustamos el top de #pomotimer-article
+    if (todoTasksHeight > 300) {
+        // Calculamos la diferencia
+        const extraHeight = todoTasksHeight - 300;
+        
+        // Establecemos el top de #pomotimer-article
+        pomotimerArticle.style.top = `${extraHeight + 730}px`;  // Sumar la diferencia a 300px (base)
+    } else {
+        // Si la altura es menor o igual a 300px, mantenemos el top en su valor original
+        pomotimerArticle.style.top = '730px';
+    }
+}
+
+// Crear un MutationObserver para detectar cambios en .todo-tasks
+const observer_2 = new MutationObserver(() => {
+    adjustPomotimerPosition(); // Ejecutamos la función cada vez que detectamos un cambio
+});
+
+// Configuramos el observer para observar cambios en los elementos hijos de .todo-tasks
+observer_2.observe(document.querySelector('.todo-tasks'), {
+    childList: true,  // Detecta adiciones o eliminaciones de tareas
+    subtree: true     // Detecta cambios en los descendientes del contenedor
+});
+
+// Llamar a la función al cargar la página por si ya hay tareas
+adjustPomotimerPosition();

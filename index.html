@@ -3,12 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=435.2, initial-scale=1.0, minimum-scale=1.0">
-    <title>Pomodoro Henry :)</title>
+    <title>PomoTimer.Focus</title>
     <link href="public/css/styles.css" rel="stylesheet">
     <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⌛</text></svg>">
   </head>
 <body>
 
@@ -16,17 +17,17 @@
     <nav class="header-pomo">
         <div class="container-fluid">
             <div class="left-section">
-                <a class="pomotimer-logo" href="">
+                <a class="pomotimer-logo">
                     <img src="public/images/pomotimer.jpg" alt="Logo">
                 </a>
             </div>
             <div class="right-section">
                 <button id="modal-pomosettings" class="btn" data-bs-toggle="modal" data-bs-target="#pomo-settings">
-                    <i class="fas fa-cog"></i>
+                    <i class="fas fa-cog"></i> Settings
                 </button>
-                <button class="btn">
+                <!--<button class="btn">
                     <i class="fa-solid fa-circle-user"></i> Login
-                </button>
+                </button> -->
             </div>
         </div>
     </nav>
@@ -81,17 +82,57 @@
         </div>
         <div class="form">
             <div class="new-task-form">
-                <label for="new-task">➕ Add a task</label>
+                <label for="new-task">➕ Add a task  </label>
                 <input id="new-task" autocomplete="off" type="text" placeholder="Try typing 'Buy tomatoes'" title="Click to start adding a task">
                 <button id="save-task-btn">➡️</button>
             </div>
-            <ul id="tasks">
-                <li class="divider">Tasks</li>
-            </ul>
+            <ul id="tasks"></ul>
+        </div>
+        <div class="summary-pomo-session">
+            <label for="pomo-session"><strong>Pomodoros: </strong><span class="num-pomos">0</span></label>
+            <label class="separator"><strong>/</strong></label>
+            <label for="time-session"><strong>Focus Time: </strong><span class="focus-time">0h</span></label>
         </div>
     </div>
 </div>
     
+    <!-- SEO-optimized Pomodoro Article Section -->
+    <section id="pomotimer-article" class="pomotimer-article">
+        <div class="container">
+            <h2>Boost Your Productivity with Pomotimer</h2>
+
+            <p>In today’s fast-paced world, staying focused and productive is a challenge. Whether you’re working, studying, or managing a project, distractions are everywhere. One method that has gained significant popularity to combat procrastination and improve focus is the <strong> <a href="https://www.pomodorotechnique.com/" target="_blank">Pomodoro Technique</a></strong>.</p>
+            
+            <h3>What is the Pomodoro Technique?</h3>
+            <p>The Pomodoro Technique, developed by Francesco Cirillo in the late 1980s, is a time management method that divides work into 25-minute intervals, known as “Pomodoros,” followed by a short break. After completing four Pomodoros, you take a longer break to recharge. This cycle encourages sustained focus while preventing burnout.</p>
+
+            <h3>How Pomotimer Works</h3>
+            <p>Pomotimer is a simple yet powerful tool that helps you implement the Pomodoro Technique in your daily routine. It features an intuitive countdown timer that alerts you when each Pomodoro and break is over, allowing you to focus on the task at hand without worrying about the clock. Here’s how it works:</p>
+            <ol>
+                <li><strong>Set a Task:</strong> Enter the task you’re working on to keep track of what you’re focusing on.</li>
+                <li><strong>Start the Timer:</strong> Pomotimer will start a 25-minute countdown (one Pomodoro).</li>
+                <li><strong>Take a Break:</strong> After each Pomodoro, a short 5-minute break will refresh your mind.</li>
+                <li><strong>Repeat:</strong> After completing four Pomodoros, Pomotimer will prompt you to take a longer break (15-30 minutes).</li>
+                <li><strong>Track Your Progress:</strong> You can easily track how many Pomodoros you’ve completed and what tasks you’ve worked on.</li>
+            </ol>
+
+            <h3>Why Use Pomotimer?</h3>
+            <ul>
+                <li><strong>Increased Focus:</strong> Pomotimer encourages you to focus on one task at a time, minimizing multitasking and distractions.</li>
+                <li><strong>Better Time Management:</strong> By breaking your day into manageable intervals, Pomotimer helps you make the most of your time.</li>
+                <li><strong>Prevention of Burnout:</strong> Regular breaks are essential to maintaining high productivity levels. Pomotimer ensures you’re taking the right amount of breaks to stay energized.</li>
+                <li><strong>Simple and Effective:</strong> Pomotimer’s user-friendly interface makes it easy for anyone to use, whether you’re a student, professional, or entrepreneur.</li>
+            </ul>
+
+            <h3>Why Pomodoro?</h3>
+            <p>The Pomodoro Technique is a proven method for enhancing productivity. Here’s why you should give it a try:</p>
+            <ul>
+                <li><strong>Prevents Mental Fatigue:</strong> Working in short, focused bursts with breaks in between helps maintain energy levels throughout the day.</li>
+                <li><strong>Boosts Motivation:</strong> Completing Pomodoros gives you a sense of achievement and keeps you motivated to finish your tasks.</li>
+                <li><strong>Improves Time Awareness:</strong> By tracking how much time you’re spending on each task, you gain a better understanding of your time management.</li>
+            </ul>
+        </div>
+    </section>
 
     <!-- Modal Settings Pomodoro-->
     <div class="modal fade" id="pomo-settings" tabindex="-1" aria-hidden="true">

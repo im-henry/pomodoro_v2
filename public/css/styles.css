@@ -10,9 +10,8 @@
     --background: #222;
     --color: white;
     --task-background: #333;
-    --task-hover-background: #444;
-    --task-completed-color: #ddd;
     --delete-color: #eb4949;
+    --border-color: #606060;
 }
 
 html, body {
@@ -325,14 +324,16 @@ body {
 }
 
 .todo-tasks {
-    position: absolute; /* Hace que el div quede fijo respecto a la ventana */
-    top: 430px;          /* Puedes ajustar la posición vertical */
-    width: 100vw;    /* Ocupa el 100% del ancho de la ventana */
+    position: absolute;
+    top: 430px;
+    width: 100vw;
     display: grid;
-    grid-template-rows: 45px 300px;
-    height: 400px;
+    /*grid-template-rows: 45px 300px;*/
+    grid-template-rows: 45px min-content 30px;
+    /*height: 300px;*/
+    min-height: 300px;
     background-color: #222;
-    padding: 20px;
+    padding: 20px 20px 25px 20px;
     box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.1);
     z-index: 1;
     align-items: top;
@@ -342,20 +343,48 @@ body {
 
 .todo-tasks .form {
     width: 100%;
+    max-width: 400px;
 }
 
+#tasks {
+    margin-top: 8px;
+    list-style: none;
+    overflow-y: hidden;
+  }
+
+  
 .new-task-form {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: var(--spacing);
     color: var(--color);
     background: var(--task-background);
     padding: calc(2* var(--spacing));
     border-radius: calc(var(--spacing)/2);
     width: 100%;
-    max-width: 50rem;
+    max-width: 100rem;
     margin: 0 auto;
+}
+
+#tasks > .task-item {
+    word-break: break-word !important; /* Fuerza a romper palabras largas */
+    overflow-wrap: break-word !important; /* Soporte adicional */
+    white-space: normal !important; /* Permite que el texto ocupe varias líneas */
+    display: block !important; /* Garantiza comportamiento de bloque */
+    max-width: 100% !important; /* Limita el ancho */
+    box-sizing: border-box !important; /* Manejo correcto del ancho y padding */
+    padding: 10px !important;
+    background-color: #333 !important;
+    color: white !important;
+    border-radius: 5px !important;
+    margin-bottom: 10px !important;
+}
+
+#new-task {
+    width: 60%;
+    border-radius: 6px;
+    border-color: #222;
 }
 
 #save-task-btn {
@@ -385,19 +414,20 @@ body {
     padding-top: 5px
 }
 
-ul {
+.todo-tasks ul {
     padding-top: 7px;
 }
 
-ul li {
+.todo-tasks ul li {
     list-style: none;
     font-size: 18px;
-    cursor: pointer;
+    
+    
     padding: 0px;
     list-style-type: none;
 }
   
-li {
+.todo-tasks li {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -407,10 +437,62 @@ li {
     border-radius: 5px;
 }
 
+.task-content {
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos */
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+    gap: 8px;
+}
+
+.task-content span {
+    flex-grow: 1; /* Hace que el span ocupe el espacio restante */
+    overflow-wrap: break-word; /* Para que el texto se divida si es largo */
+    display: inline-block;
+    text-align: justify; /* Justifica el texto */
+}
+
 .delete-task-btn {
-    background-color: #222;
+    background-color: #333;
     height: 27px;
     width: 27px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    align-self: center; /* Centra el botón verticalmente */
+    justify-content: center;
+}
+
+.delete-task-btn:active {
+    transform: scale(0.9); /* Hace que el botón se reduzca un poco cuando se hace clic */
+}
+
+.summary-pomo-session {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing);
+    color: var(--color);
+    background: var(--task-background);
+    padding: calc(2* var(--spacing));
+    border-radius: calc(var(--spacing)/2);
+    width: 100%;
+    min-width: 25rem;   
+    margin: 0 auto;
+}
+
+.separator {
+    font-size: 20px;
+    color: #aaaaaa;
+}
+
+.num-pomos {
+    font-size: 25px;
+}
+
+.focus-time {
+    font-size: 25px;
 }
 
 /*Play Stop Button*/
@@ -573,6 +655,26 @@ li {
     width: 100%;
 }
 
+#pomotimer-article {
+    position:absolute;
+    top: 730px; /* Adjust the value to push the article down */
+    padding: 20px 0 20px 0;
+    width: 100vw;
+    background-color: #f9f9f9;
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+#pomotimer-article .container {
+    width: 60%;
+}
+
+#pomotimer-article a {
+    text-decoration: none;
+    color: #d1d468;  /* Color gris para el enlace */
+}
+
+
 @keyframes to-play {
     15% {
         transform: translateX(6px) scaleY(1.1);
@@ -684,13 +786,42 @@ li {
       padding: 0 40px;
     }
   }
-@media (min-width: 360px) and (max-width: 516px) {
+  @media (min-width: 360px) and (max-width: 460px) {
     .button-56 {
-        padding: 0 20px;
-        font-size: 16px;
+        padding: 0 18px; /* Ajustamos el padding */
+        font-size: 14px;  /* Un poco más pequeño para mejorar la visibilidad */
+        width: 100%;      /* Aseguramos que el ancho se ajuste */
     }
+
     .time-controller {
-        width: 90%;
-        margin-left: +5%;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .main-content {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+/* Ajustes para pantallas medianas, como Galaxy S20 cuando se encuentra en orientación horizontal (rango de 461px a 516px) */
+@media (min-width: 461px) and (max-width: 516px) {
+    .button-56 {
+        padding: 0 20px; /* Mantener un padding cómodo */
+        font-size: 16px;  /* Un tamaño un poco mayor para pantallas más grandes */
+        width: 100%;      /* Aseguramos el ancho completo */
+    }
+
+    .time-controller {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .main-content {
+        width: 100%;
+        margin: 0;
+    }
+    .todo-tasks .form {
+        width: 100%;
     }
 }
