@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     /*font-family: Inter,sans-serif;*/
-    font-family: 'League Spartan', sans-serif;
+    font-family: 'League Spartan', sans-serif;    
 }
 
 :root {
@@ -17,7 +17,9 @@
 html, body {
     height: 100%;
     margin: 0;
+    padding: 0;
     min-width: 435.2px;
+    max-width: 100vw;
     background: #d1d468;
 }
 
@@ -326,7 +328,7 @@ body {
 .todo-tasks {
     position: absolute;
     top: 430px;
-    width: 100vw;
+    width: 100%;
     display: grid;
     /*grid-template-rows: 45px 300px;*/
     grid-template-rows: 45px min-content 30px;
@@ -363,22 +365,21 @@ body {
     padding: calc(2* var(--spacing));
     border-radius: calc(var(--spacing)/2);
     width: 100%;
-    max-width: 100rem;
     margin: 0 auto;
 }
 
 #tasks > .task-item {
-    word-break: break-word !important; /* Fuerza a romper palabras largas */
-    overflow-wrap: break-word !important; /* Soporte adicional */
-    white-space: normal !important; /* Permite que el texto ocupe varias líneas */
-    display: block !important; /* Garantiza comportamiento de bloque */
-    max-width: 100% !important; /* Limita el ancho */
-    box-sizing: border-box !important; /* Manejo correcto del ancho y padding */
-    padding: 10px !important;
-    background-color: #333 !important;
-    color: white !important;
-    border-radius: 5px !important;
-    margin-bottom: 10px !important;
+    word-break: break-word; /* Fuerza a romper palabras largas */
+    overflow-wrap: break-word; /* Soporte adicional */
+    white-space: normal; /* Permite que el texto ocupe varias líneas */
+    display: block; /* Garantiza comportamiento de bloque */
+    max-width: 100%; /* Limita el ancho */
+    box-sizing: border-box; /* Manejo correcto del ancho y padding */
+    padding: 10px;
+    background-color: #414040;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 #new-task {
@@ -659,7 +660,7 @@ body {
     position:absolute;
     top: 730px; /* Adjust the value to push the article down */
     padding: 20px 0 20px 0;
-    width: 100vw;
+    width: 100%;
     background-color: #f9f9f9;
     color: #333;
     font-family: Arial, sans-serif;
@@ -667,11 +668,20 @@ body {
 
 #pomotimer-article .container {
     width: 60%;
+    margin-top: 10px;
 }
 
 #pomotimer-article a {
     text-decoration: none;
     color: #d1d468;  /* Color gris para el enlace */
+}
+
+#pomotimer-article h1 {
+    font-size: 32px;
+}
+
+#pomotimer-article h3 {
+    font-size: 26px;
 }
 
 
@@ -768,7 +778,7 @@ body {
         margin-left: 0; /* Elimina el desplazamiento */
     }
     .main-content {
-        width: 100%;
+        max-width: 100vw;
         height: 100vh;
         display: grid;
         grid-template-rows: 80px 80px 200px;

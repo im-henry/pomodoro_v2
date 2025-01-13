@@ -1,6 +1,12 @@
 /**Button by: Copyright (c) 2024 by Aaron Iker (https://codepen.io/aaroniker/pen/abzOdRR) */
 document.querySelectorAll('.play-pause-button').forEach(button => {
     button.addEventListener('click', e => {
+        //Sound
+        const audio = new Audio('public/media/start_button.mp3');
+        audio.play().catch(error => {
+        console.error("Error playing sound:", error);
+        }); 
+
         if(button.classList.contains('playing')) {
             button.classList.remove('paused', 'playing');
             button.classList.add('paused');
@@ -30,7 +36,11 @@ document.querySelectorAll('.button-56').forEach((button) => {
         document.querySelectorAll('.button-56').forEach((btn) => {
             btn.classList.remove('active');
         });
-
+        //Sound
+        const audio = new Audio('public/media/button.mp3');
+        audio.play().catch(error => {
+        console.error("Error playing sound:", error);
+        }); 
         //Add active class
         button.classList.add('active');
     });
@@ -72,6 +82,9 @@ let ss = document.getElementById('ss');
 let dotM = document.querySelector('.m_dot');
 let dotS = document.querySelector('.s_dot');
 
+//Display time
+document.title = `${pomodoroTime}:00 - PomoTimer`;
+
 mm.addEventListener('transitionend', (event) => {
     if (event.propertyName === 'stroke-dashoffset') {
         // La transición de strokeDashoffset ha terminado
@@ -91,6 +104,30 @@ document.querySelector('.set-time').addEventListener('click', () => {
     longRestTime = parseInt(document.getElementById('long-rest-setting').value) || 15;
 })
 
+//Display correct time after saving changes on settings
+document.querySelector('.close-and-save').addEventListener('click', () => {
+    updateDisplay();
+    const mode = getCurrentMode(); 
+    // Determine title based on mode
+    switch (mode) {
+        case 'pomodoro':
+            m = pomodoroTime;
+            s = 0;
+            updateDisplay();
+            break;
+        case 'short-rest':
+            m = shortRestTime;
+            s = 0;
+            updateDisplay();
+            break;
+        case 'long-rest':
+            m = longRestTime;
+            s = 0;
+            updateDisplay();
+            break;
+        }
+})
+
 /**Display according to the active mode*/
 updateDisplay();
 document.getElementById('pomodoro').addEventListener('click', () => {
@@ -99,7 +136,9 @@ document.getElementById('pomodoro').addEventListener('click', () => {
     s = 0;
     isPaused = true;
     updateDisplay();
-    pause_button();  
+    pause_button(); 
+    const wmode = getCurrentMode(); 
+    updateTabTime(wmode)
 })
 document.getElementById('short-rest').addEventListener('click', () => {
     clearInterval(intervalId);
@@ -108,6 +147,8 @@ document.getElementById('short-rest').addEventListener('click', () => {
     isPaused = true;
     updateDisplay();
     pause_button();
+    const wmode = getCurrentMode(); 
+    updateTabTime(wmode)
 })
 document.getElementById('long-rest').addEventListener('click', () => {
     clearInterval(intervalId);
@@ -116,6 +157,8 @@ document.getElementById('long-rest').addEventListener('click', () => {
     isPaused = true;
     updateDisplay();
     pause_button();
+    const wmode = getCurrentMode(); 
+    updateTabTime(wmode)
 })
 
 /**Start-button logic */
@@ -132,9 +175,18 @@ document.getElementById('play-timer').addEventListener('click', () => {
                     s = 0;
                     clearInterval(intervalId);
                     switchMode();
+
+                    // AGREGAR AQUÍ FUNCIÓN
+                    newMode = getCurrentMode();
+                    updateTabTime(newMode);
+
                     pause_button();
                     isPaused=true;
-                    console.log("LLegamos a 0!!!!");
+                    console.log("Reached 0!!!");
+                    const audio = new Audio('public/media/bell_sound.mp3');
+                    audio.play().catch(error => {
+                        console.error("Error playing sound:", error);
+                    });                    
                 }
             }
             /**Update view*/
@@ -150,34 +202,46 @@ document.getElementById('play-timer').addEventListener('click', () => {
             //set dot time position indicator
             dotM.style.transform = `rotate(${m * 6}deg)`;
             dotS.style.transform = `rotate(${s * 6}deg)`;
-
-        }, 1000);
-        console.log("Estoy llegando a falsear el isPaused??");
+            // add time on tab
+            const wmode = getCurrentMode();
+            /** Función para actualizar tiempo en tab */
+            if (wmode === 'pomodoro') {
+                document.title = `${displaym}:${displays} - Focus Time`;
+            } else {
+                document.title = `${displaym}:${displays} - Rest Time`;
+            }           
+        }, 100);
         isPaused = false;
         
     } else {
         //if not in pause, stop the timer
         clearInterval(intervalId);
         isPaused = true;
-        console.log(`Else del play button. isPaused=${isPaused}`);
     }
 });
 
 /**Skip button logic */
 document.querySelector('.skip-button').addEventListener('click', () => {
-    console.log(`Está siendo apretado. isPaused=${isPaused}`);
+    //Sound
+    const audio = new Audio('public/media/skip_button.mp3');
+    audio.play().catch(error => {
+    console.error("Error playing sound:", error);
+    }); 
+
     if (!isPaused) {
         isPaused = true;
         clearInterval(intervalId);
         pause_button();
-        console.log(`(Condición isPaused false) Estoy entrando aquí. isPaused=${isPaused}`);
         switchMode();
+        const wmode = getCurrentMode(); 
+        updateTabTime(wmode)
     } else {
         if (isPaused) {
         clearInterval(intervalId);
         switchMode();
         pause_button()
-        console.log(`(Condición isPaused true) status pause: ${isPaused}`);
+        const wmode = getCurrentMode(); 
+        updateTabTime(wmode)
         }
     }
 })
@@ -210,8 +274,11 @@ function getCurrentMode() {
 function switchMode() {
     const currentMode = getCurrentMode();
     if (currentMode === 'pomodoro') {
+        const pomoCounter = document.querySelector('.num-pomos');
+        pomoCounter.textContent = `${pomodoroCount}`;
+
         pomodoroCount++;
-        console.log(`El pomodoroCount es ${pomodoroCount}.`);
+        console.log(`pomodoroCount: ${pomodoroCount}.`);
         if (pomodoroCount % 4 === 0) {
             setMode("long-rest", longRestTime);
         } else {
@@ -311,6 +378,32 @@ observer.observe(list, { childList: true });
 
 // Cargar tareas al cargar la página
 document.addEventListener('DOMContentLoaded', loadTasksFromLocalStorage);
+
+/** Función para actualizar tiempo en tab */
+function updateTabTime(mode) {
+    // Helper function to format time with leading zero
+    const formatTime = (time) => (time < 10 ? `0${time}` : time);
+
+    // Format times
+    const showPomoTime = formatTime(pomodoroTime);
+    const showSRestTime = formatTime(shortRestTime);
+    const showLRestTime = formatTime(longRestTime);
+
+    // Determine title based on mode
+    switch (mode) {
+        case 'pomodoro':
+            document.title = `${showPomoTime}:00 - Focus Time`;
+            break;
+        case 'short-rest':
+            document.title = `${showSRestTime}:00 - Rest Time`;
+            break;
+        case 'long-rest':
+            document.title = `${showLRestTime}:00 - Rest Time`;
+            break;
+        default:
+            document.title = 'Pomodoro Timer';
+    }
+}
 
 /** Función que ajusta la posición de #pomotimer-article */
 function adjustPomotimerPosition() {
