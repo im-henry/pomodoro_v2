@@ -91,7 +91,7 @@
         <div class="summary-pomo-session">
             <label for="pomo-session"><strong>Pomodoros: </strong><span class="num-pomos">0</span></label>
             <label class="separator"><strong>/</strong></label>
-            <label for="time-session"><strong>Focus Time: </strong><span class="focus-time">0h</span></label>
+            <label for="time-session"><strong>Focus Time: </strong><span class="focus-time">0h 0m</span></label>
         </div>
     </div>
 </div>
@@ -154,6 +154,10 @@
                 <br>
                 <input id="long-rest-setting" type="number" class="input-setting" value="15" min="1">
             </div>
+            <div class="modal-body">
+                <strong>RESET POMOS & TIME ➡️</strong>
+                <button class="reset-progress" aria-label="reset timer">💣</button>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-dark set-time close-and-save" data-bs-dismiss="modal">Save</button>
             </div>
@@ -165,6 +169,7 @@
     <script src="node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="public/js/script.js"></script>
+    <!--<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJWX36YGT6"></script> No olvidar de añadir estas cosas -->
 
 </body>
 </html>

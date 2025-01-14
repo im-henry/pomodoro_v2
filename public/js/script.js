@@ -98,11 +98,27 @@ ss.addEventListener('transitionend', (event) => {
     }
 });
 
-document.querySelector('.set-time').addEventListener('click', () => {
-    pomodoroTime = parseInt(document.getElementById('focus-time-setting').value) || 25;
-    shortRestTime = parseInt(document.getElementById('short-rest-setting').value) || 5;
-    longRestTime = parseInt(document.getElementById('long-rest-setting').value) || 15;
-})
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.set-time').addEventListener('click', () => {
+        pomodoroTime = parseInt(document.getElementById('focus-time-setting').value) || 25;
+        shortRestTime = parseInt(document.getElementById('short-rest-setting').value) || 5;
+        longRestTime = parseInt(document.getElementById('long-rest-setting').value) || 15;
+
+        // Guardar los valores en localStorage
+        localStorage.setItem('pomodoroTime', pomodoroTime);
+        localStorage.setItem('shortRestTime', shortRestTime);
+        localStorage.setItem('longRestTime', longRestTime);
+
+        console.log('Configuración guardada en localStorage:', { pomodoroTime, shortRestTime, longRestTime });
+
+        // Simular un clic en el botón .close-and-save
+        const closeButton = document.querySelector('.close-and-save');
+        closeButton.click(); // Simular el clic
+        console.log('Supuestamente ya hice el click...');
+    });
+});
+
+
 
 //Display correct time after saving changes on settings
 document.querySelector('.close-and-save').addEventListener('click', () => {
@@ -266,6 +282,7 @@ function updateDisplay() {
 
 /**Function for switching modes */
 let pomodoroCount = 0;
+let timeinFocus = 0;
 function getCurrentMode() {
     const activeButton = document.querySelector('.button-56.active');
     return activeButton ? activeButton.id: "pomodoro"; //default for pomodoro if no active button
@@ -274,8 +291,17 @@ function getCurrentMode() {
 function switchMode() {
     const currentMode = getCurrentMode();
     if (currentMode === 'pomodoro') {
+        pomodoroCount += 1;
         const pomoCounter = document.querySelector('.num-pomos');
         pomoCounter.textContent = `${pomodoroCount}`;
+
+        const pomoTimeCounter = document.querySelector('.focus-time');
+        timeinFocus += pomodoroTime;
+
+        const hours = Math.floor(timeinFocus / 60); // Obtiene la parte entera como horas
+        const minutes = timeinFocus % 60;
+
+        pomoTimeCounter.textContent = `${hours}h ${minutes}m`;
 
         pomodoroCount++;
         console.log(`pomodoroCount: ${pomodoroCount}.`);
@@ -315,7 +341,7 @@ function saveTasksToLocalStorage() {
     localStorage.setItem('tasks', JSON.stringify(tasks)); // Guardar como JSON en Local Storage
 }
 
-// Cargar tareas desde Local Storage
+// Cargar desde Local Storage
 function loadTasksFromLocalStorage() {
     const tasks = JSON.parse(localStorage.getItem('tasks'));
     if (tasks) {
@@ -325,6 +351,38 @@ function loadTasksFromLocalStorage() {
     }
 }
 
+window.addEventListener('load', () => {
+    const savedPomodoroTime = localStorage.getItem('pomodoroTime');
+    const savedShortRestTime = localStorage.getItem('shortRestTime');
+    const savedLongRestTime = localStorage.getItem('longRestTime');
+
+    if (savedPomodoroTime) {
+        pomodoroTime = parseInt(savedPomodoroTime);
+        document.getElementById('focus-time-setting').value = pomodoroTime;
+    }
+    
+    if (savedShortRestTime) {
+        shortRestTime = parseInt(savedShortRestTime);
+        document.getElementById('short-rest-setting').value = shortRestTime;
+    }
+    
+    if (savedLongRestTime) {
+        longRestTime = parseInt(savedLongRestTime);
+        document.getElementById('long-rest-setting').value = longRestTime;
+    }
+
+    console.log('Configuración cargada desde localStorage:', { pomodoroTime, shortRestTime, longRestTime });
+
+    clearInterval(intervalId);
+    m = pomodoroTime;
+    s = 0;
+    isPaused = true;
+    updateDisplay();
+    pause_button(); 
+    const wmode = getCurrentMode(); 
+    updateTabTime(wmode)
+});
+
 // Añadir tarea a la lista y al DOM
 function addTaskToList(taskName) {
     const li = document.createElement('li');
@@ -332,15 +390,82 @@ function addTaskToList(taskName) {
     li.innerHTML = `
         <div class="task-content">
             <span>${taskName}</span>
-            <button class="delete-task-btn">❌</button>
+            <div class="dropdown">
+                <button class="options-button dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="public/images/ellipsis-vertical.png" alt="task options">
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item edit-task" href="#"><img src="public/images/edit-task.png" alt="edit task">Edit task</a></li>
+                    <li><a class="dropdown-item delete-task" href="#"><img src="public/images/trash.png" alt="delete task">Delete</a></li>
+                </ul>
+            </div>
         </div>
     `;
     list.appendChild(li);
 
-    // Añadir funcionalidad de eliminar tarea
-    li.querySelector('.delete-task-btn').addEventListener('click', () => {
-        li.remove();
-        saveTasksToLocalStorage();
+    // Añadir funcionalidad de eliminar tarea solo al botón "Delete"
+    li.querySelector('.delete-task').addEventListener('click', (event) => {
+        event.preventDefault(); // Evita el comportamiento predeterminado del enlace
+        li.remove(); // Elimina el elemento li de la lista
+        saveTasksToLocalStorage(); // Guarda los cambios en el almacenamiento local
+    });
+
+    // Añadir funcionalidad de editar tarea
+    li.querySelector('.edit-task').addEventListener('click', (event) => {
+        event.preventDefault();
+        const span = li.querySelector('span');
+        const currentText = span.textContent;
+
+        // Convertir el texto en un campo de entrada para editarlo
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = currentText;
+        input.classList.add('edit-task-input');
+        span.replaceWith(input);
+        input.focus();
+
+        // Crear el botón de guardar
+        const saveButton = document.createElement('button');
+        saveButton.textContent = 'SAVE';
+        saveButton.classList.add('save-button');
+
+        // Deshabilitar el dropdown y evitar que se despliegue
+        const dropdown = li.querySelector('.dropdown');
+        const dropdownButton = dropdown.querySelector('.options-button');
+        const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+
+        // Deshabilitar el botón del dropdown para evitar que se despliegue
+        dropdownButton.setAttribute('aria-expanded', 'false');
+        dropdownMenu.classList.remove('show'); // Eliminar el show para asegurarnos de que no se despliegue
+        dropdownButton.disabled = true; // Deshabilitar el botón del dropdown
+        dropdown.replaceWith(saveButton); // Reemplazar el dropdown con el botón SAVE
+
+        // Función para guardar la tarea
+        const saveTask = () => {
+            const newText = input.value.trim();
+            if (newText) {
+                const updatedSpan = document.createElement('span');
+                updatedSpan.textContent = newText;
+                input.replaceWith(updatedSpan); // Reemplazar el input con el nuevo texto
+                saveButton.replaceWith(dropdown); // Restaurar el dropdown
+                dropdownButton.disabled = false; // Habilitar el botón del dropdown
+                saveTasksToLocalStorage(); // Guardar en el local storage
+            } else {
+                alert('Task description cannot be empty!');
+                input.focus(); // Volver a enfocar el input si está vacío
+            }
+        };
+
+        // Guardar al hacer clic en el botón SAVE
+        saveButton.addEventListener('click', saveTask);
+
+        // Guardar al presionar Enter
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // Prevenir el comportamiento predeterminado
+                saveTask();
+            }
+        });
     });
 }
 
@@ -372,6 +497,42 @@ const observerCallback = (mutationsList) => {
         }
     }
 };
+
+// Evento para resetear tiempos y pomos
+const resetButton = document.querySelector('.reset-progress');
+
+resetButton.addEventListener('click', () => {
+    const userConfirmedReset = confirm('Are you sure to reset your progress?');
+    
+    if (userConfirmedReset) {
+        // Reiniciar las variables
+        pomodoroCount = 0;
+        timeinFocus = 0;
+
+        // Actualizar el contador en la interfaz
+        const hours = Math.floor(timeinFocus / 60); // Obtiene la parte entera como horas
+        const minutes = timeinFocus % 60;
+        const pomoTimeCounter = document.querySelector('.focus-time');
+        pomoTimeCounter.textContent = `${hours}h ${minutes}m`;
+        const pomoCounter = document.querySelector('.num-pomos');
+        pomoCounter.textContent = `${pomodoroCount}`;
+
+        // Cambiar el botón por el mensaje temporalmente
+        const originalText = resetButton.textContent; // Guardar el texto original
+        resetButton.textContent = "💥"; // Cambiar texto
+
+        // Añadir una clase personalizada para simular el estado "deshabilitado"
+        resetButton.classList.add('no-click'); // Esta clase solo deshabilitará la interacción visual
+        resetButton.style.cursor = 'not-allowed'; // Cambia el cursor para indicar no interactuable
+
+        // Restaurar el botón después de 2 segundos
+        setTimeout(() => {
+            resetButton.textContent = originalText; // Restaurar el texto original
+            resetButton.classList.remove('no-click'); // Eliminar la clase personalizada
+            resetButton.style.cursor = 'pointer'; // Restaurar el cursor
+        }, 1000);
+    }
+});
 
 const observer = new MutationObserver(observerCallback);
 observer.observe(list, { childList: true });

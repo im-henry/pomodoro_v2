@@ -29,6 +29,13 @@ body {
     --spacing: .5rem;
 }
 
+/* Asegurarse de que las flechas sean visibles siempre */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1; /* Asegura que siempre sean visibles */
+    display: block; /* Garantiza que estén presentes */
+}
+
 .main-content {
     width: 100%;
     height: 100vh;
@@ -208,6 +215,19 @@ body {
     color: #111;
   }
 
+/*Reset progress*/
+.reset-progress {
+    font-size: 35px;
+    border-radius: 50%;
+    border-color: transparent;
+    background-color: #fff;
+}
+
+.reset-progress:hover {
+    transform: translateY(-2px);
+    background-color: #ffffff1a;
+}
+
 /*Header*/
 /* Contenedor principal del header */
 .header-pomo {
@@ -341,6 +361,7 @@ body {
     align-items: top;
     text-align: center;
     justify-content: center;
+    overflow: visible;
 }
 
 .todo-tasks .form {
@@ -351,7 +372,7 @@ body {
 #tasks {
     margin-top: 8px;
     list-style: none;
-    overflow-y: hidden;
+    overflow-y: visible;
   }
 
   
@@ -392,6 +413,16 @@ body {
     background-color: #333;
     height: 24px;
     width: 24px;
+}
+
+.save-button {
+    font-size: 15px;
+    padding: 1px 3px;
+    background-color: #795CC8;
+    border-radius: 13%;
+    border-width: 3px;
+    border-color: #000000;
+    color: #dcdcdc;
 }
 
 .todo-title {
@@ -468,6 +499,89 @@ body {
     transform: scale(0.9); /* Hace que el botón se reduzca un poco cuando se hace clic */
 }
 
+.dropdown-menu {
+    min-width: 150px; /* Ajusta el ancho del menú desplegable */
+    padding: 0;/* Ajusta el espaciado interno */
+    font-size: 14px; /* Tamaño de texto más pequeño */
+    background-color: #fff; /* Asegúrate de que tenga fondo blanco */
+    border: 1px solid #ccc; /* Un borde para que sea más visible */
+    overflow: visible !important;
+}
+
+.dropdown-menu.show {
+    position: absolute; /* Asegúrate de que el menú esté bien posicionado */
+    z-index: 1055 !important; /* Garantiza que esté sobre otros elementos */
+    
+}
+
+/* Ajusta los enlaces dentro del dropdown */
+.dropdown-menu .dropdown-item {
+    color: #000000; /* Texto oscuro */
+    padding: 4px 8px; /* Espaciado interno del texto */
+    transition: background-color 0.2s ease, color 0.2s ease;
+    background-color: #f8f9fa;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #d9d9d9; /* Fondo claro al pasar el cursor */
+    color: #000000; /* Texto más oscuro al pasar el cursor */
+}
+
+.dropdown-item img {
+    padding-bottom: 5px;
+    padding-right: 6px;
+}
+
+.dropdown li {
+    margin: 2px;
+}
+
+.dropdown ul {
+    padding: 1px 0 0 1px;
+}
+
+/* Ajusta el botón para que combine bien con el dropdown */
+.options-button {
+    background: none; /* Elimina cualquier fondo por defecto */
+    border: none; /* Sin bordes */
+    padding: 0;
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%; /* Círculo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.options-button::after {
+    content: none !important; /* Elimina el contenido adicional (la flecha) */
+}
+
+.options-button img {
+    height: 18px; /* Ajusta el tamaño del ícono */
+    width: 18px;
+}
+
+/* Añade un efecto al hacer clic */
+.options-button:active {
+    transform: scale(0.95);
+}
+
+
+.options-button:hover {
+    transform: translateY(-2px);
+    background-color: #ffffff1a;
+}
+
+.edit-task-input {
+    width: 85%;
+    border-radius: 6px;
+    border-color: #222;
+    padding-left: 4px;
+}
+
 .summary-pomo-session {
     height: 40px;
     display: flex;
@@ -489,11 +603,15 @@ body {
 }
 
 .num-pomos {
-    font-size: 25px;
+    font-size: 22px;
 }
 
 .focus-time {
-    font-size: 25px;
+    font-size: 22px;
+}
+
+#focus-time-setting, #short-rest-setting, #long-rest-setting {
+    width: 100%;
 }
 
 /*Play Stop Button*/
@@ -834,4 +952,9 @@ body {
     .todo-tasks .form {
         width: 100%;
     }
+}
+
+.no-click {
+    pointer-events: none; /* Impide hacer clic en el botón */
+    opacity: 1; /* Mantiene la opacidad normal */
 }
