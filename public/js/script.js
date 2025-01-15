@@ -2,7 +2,7 @@
 document.querySelectorAll('.play-pause-button').forEach(button => {
     button.addEventListener('click', e => {
         //Sound
-        const audio = new Audio('/media/start_button.mp3');
+        const audio = new Audio('../media/start_button.mp3');
         audio.play().catch(error => {
         console.error("Error playing sound:", error);
         }); 
@@ -37,7 +37,7 @@ document.querySelectorAll('.button-56').forEach((button) => {
             btn.classList.remove('active');
         });
         //Sound
-        const audio = new Audio('/media/button.mp3');
+        const audio = new Audio('../media/button.mp3');
         audio.play().catch(error => {
         console.error("Error playing sound:", error);
         }); 
@@ -199,7 +199,7 @@ document.getElementById('play-timer').addEventListener('click', () => {
                     pause_button();
                     isPaused=true;
                     console.log("Reached 0!!!");
-                    const audio = new Audio('/media/bell_sound.mp3');
+                    const audio = new Audio('../media/bell_sound.mp3');
                     audio.play().catch(error => {
                         console.error("Error playing sound:", error);
                     });                    
@@ -239,7 +239,7 @@ document.getElementById('play-timer').addEventListener('click', () => {
 /**Skip button logic */
 document.querySelector('.skip-button').addEventListener('click', () => {
     //Sound
-    const audio = new Audio('/media/skip_button.mp3');
+    const audio = new Audio('../media/skip_button.mp3');
     audio.play().catch(error => {
     console.error("Error playing sound:", error);
     }); 
