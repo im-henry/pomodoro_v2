@@ -1,3 +1,15 @@
+if (Notification.permission === 'default') {
+    Notification.requestPermission(); // Solicitar permiso si no está otorgado
+}
+
+const notifyUser = () => {
+    if (Notification.permission === 'granted') {
+        new Notification('¡Tiempo completado!', {
+            body: 'Tu tiempo Pomodoro ha terminado.',
+        });
+    }
+};
+
 /**Button by: Copyright (c) 2024 by Aaron Iker (https://codepen.io/aaroniker/pen/abzOdRR) */
 document.querySelectorAll('.play-pause-button').forEach(button => {
     button.addEventListener('click', e => {
@@ -205,6 +217,7 @@ document.getElementById('play-timer').addEventListener('click', () => {
                 audio.play().catch(error => {
                     console.error("Error playing sound:", error);
                 });
+                notifyUser(); // Enviar notificación como respaldo
 
             } else {
                 // Calcular minutos y segundos restantes
