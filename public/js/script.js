@@ -2,7 +2,7 @@
 document.querySelectorAll('.play-pause-button').forEach(button => {
     button.addEventListener('click', e => {
         //Sound
-        const audio = new Audio('public/media/start_button.mp3');
+        const audio = new Audio('/public/media/start_button.mp3');
         audio.play().catch(error => {
         console.error("Error playing sound:", error);
         }); 
@@ -37,7 +37,7 @@ document.querySelectorAll('.button-56').forEach((button) => {
             btn.classList.remove('active');
         });
         //Sound
-        const audio = new Audio('public/media/button.mp3');
+        const audio = new Audio('/public/media/button.mp3');
         audio.play().catch(error => {
         console.error("Error playing sound:", error);
         }); 
@@ -199,7 +199,7 @@ document.getElementById('play-timer').addEventListener('click', () => {
                     pause_button();
                     isPaused=true;
                     console.log("Reached 0!!!");
-                    const audio = new Audio('public/media/bell_sound.mp3');
+                    const audio = new Audio('/public/media/bell_sound.mp3');
                     audio.play().catch(error => {
                         console.error("Error playing sound:", error);
                     });                    
@@ -239,7 +239,7 @@ document.getElementById('play-timer').addEventListener('click', () => {
 /**Skip button logic */
 document.querySelector('.skip-button').addEventListener('click', () => {
     //Sound
-    const audio = new Audio('public/media/skip_button.mp3');
+    const audio = new Audio('/public/media/skip_button.mp3');
     audio.play().catch(error => {
     console.error("Error playing sound:", error);
     }); 
@@ -392,11 +392,11 @@ function addTaskToList(taskName) {
             <span>${taskName}</span>
             <div class="dropdown">
                 <button class="options-button dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="public/images/ellipsis-vertical.png" alt="task options">
+                    <img src="/public/images/ellipsis-vertical.png" alt="task options">
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item edit-task" href="#"><img src="public/images/edit-task.png" alt="edit task">Edit task</a></li>
-                    <li><a class="dropdown-item delete-task" href="#"><img src="public/images/trash.png" alt="delete task">Delete</a></li>
+                    <li><a class="dropdown-item edit-task" href="#"><img src="/public/images/edit-task.png" alt="edit task">Edit task</a></li>
+                    <li><a class="dropdown-item delete-task" href="#"><img src="/public/images/trash.png" alt="delete task">Delete</a></li>
                 </ul>
             </div>
         </div>
