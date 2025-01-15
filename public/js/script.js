@@ -392,11 +392,11 @@ function addTaskToList(taskName) {
             <span>${taskName}</span>
             <div class="dropdown">
                 <button class="options-button dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="public/images/ellipsis-vertical.png" alt="task options">
+                    <img src="images/ellipsis-vertical.png" alt="task options">
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item edit-task" href="#"><img src="public/images/edit-task.png" alt="edit task">Edit task</a></li>
-                    <li><a class="dropdown-item delete-task" href="#"><img src="public/images/trash.png" alt="delete task">Delete</a></li>
+                    <li><a class="dropdown-item edit-task" href="#"><img src="images/edit-task.png" alt="edit task">Edit task</a></li>
+                    <li><a class="dropdown-item delete-task" href="#"><img src="images/trash.png" alt="delete task">Delete</a></li>
                 </ul>
             </div>
         </div>
