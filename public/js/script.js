@@ -226,7 +226,7 @@ document.getElementById('play-timer').addEventListener('click', () => {
             } else {
                 document.title = `${displaym}:${displays} - Rest Time`;
             }           
-        }, 100);
+        }, 1000);
         isPaused = false;
         
     } else {
