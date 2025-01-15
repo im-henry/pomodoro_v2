@@ -318,7 +318,6 @@ function switchMode() {
         const minutes = timeinFocus % 60;
 
         pomoTimeCounter.textContent = `${hours}h ${minutes}m`;
-
         console.log(`pomodoroCount: ${pomodoroCount}.`);
         if (pomodoroCount % 4 === 0) {
             setMode("long-rest", longRestTime);
