@@ -178,59 +178,62 @@ document.getElementById('long-rest').addEventListener('click', () => {
 })
 
 /**Start-button logic */
+let endTime; // Tiempo cuando el temporizador debe terminar
+
 document.getElementById('play-timer').addEventListener('click', () => {
     if (isPaused) {
-        //Start timer
+        // Calcular tiempo de finalización
+        endTime = new Date().getTime() + (m * 60 + s) * 1000;
+
+        // Iniciar temporizador
         intervalId = setInterval(() => {
-            s--;
-            if (s < 0) {
-                s = 59;
-                m--;
-                if (m < 0) {
-                    m = 0;
-                    s = 0;
-                    clearInterval(intervalId);
-                    switchMode();
+            const now = new Date().getTime();
+            const remainingTime = endTime - now;
 
-                    // AGREGAR AQUÍ FUNCIÓN
-                    newMode = getCurrentMode();
-                    updateTabTime(newMode);
+            if (remainingTime <= 0) {
+                clearInterval(intervalId);
+                m = 0;
+                s = 0;
+                switchMode();
+                newMode = getCurrentMode();
+                updateTabTime(newMode);
+                pause_button();
+                isPaused = true;
 
-                    pause_button();
-                    isPaused=true;
-                    console.log("Reached 0!!!");
-                    const audio = new Audio('media/bell_sound.mp3');
-                    audio.play().catch(error => {
-                        console.error("Error playing sound:", error);
-                    });                    
+                console.log("Reached 0!!!");
+                const audio = new Audio('media/bell_sound.mp3');
+                audio.play().catch(error => {
+                    console.error("Error playing sound:", error);
+                });
+
+            } else {
+                // Calcular minutos y segundos restantes
+                m = Math.floor(remainingTime / (1000 * 60));
+                s = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+                // Actualizar vista
+                displaym = m < 10 ? '0' + m : m;
+                displays = s < 10 ? '0' + s : s;
+
+                minutes.innerHTML = displaym + 'min';
+                seconds.innerHTML = displays + 'sec';
+                mm.style.strokeDashoffset = 440 - (440 * m) / 60;
+                ss.style.strokeDashoffset = 440 - (440 * s) / 60;
+                dotM.style.transform = `rotate(${m * 6}deg)`;
+                dotS.style.transform = `rotate(${s * 6}deg)`;
+
+                // Actualizar título de la pestaña
+                const wmode = getCurrentMode();
+                if (wmode === 'pomodoro') {
+                    document.title = `${displaym}:${displays} - Focus Time`;
+                } else {
+                    document.title = `${displaym}:${displays} - Rest Time`;
                 }
             }
-            /**Update view*/
-            //add 0 before displaying single digit
-            displaym = m < 10 ? '0' + m : m;
-            displays = s < 10 ? '0' + s : s;
-            //set time and label
-            minutes.innerHTML = displaym + 'min';
-            seconds.innerHTML = displays + 'sec';
-            //set time circular indicator
-            mm.style.strokeDashoffset = 440 - (440*m)/60;
-            ss.style.strokeDashoffset = 440 - (440*s)/60;
-            //set dot time position indicator
-            dotM.style.transform = `rotate(${m * 6}deg)`;
-            dotS.style.transform = `rotate(${s * 6}deg)`;
-            // add time on tab
-            const wmode = getCurrentMode();
-            /** Función para actualizar tiempo en tab */
-            if (wmode === 'pomodoro') {
-                document.title = `${displaym}:${displays} - Focus Time`;
-            } else {
-                document.title = `${displaym}:${displays} - Rest Time`;
-            }           
         }, 1000);
+
         isPaused = false;
-        
     } else {
-        //if not in pause, stop the timer
         clearInterval(intervalId);
         isPaused = true;
     }
