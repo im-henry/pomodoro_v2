@@ -958,3 +958,28 @@ input[type="number"]::-webkit-outer-spin-button {
     pointer-events: none; /* Impide hacer clic en el botón */
     opacity: 1; /* Mantiene la opacidad normal */
 }
+
+.footer a {
+    color: inherit;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 20px; /* Adjust icon size */
+  }
+  
+  .footer a:hover {
+    color: #ffcc00; /* Change color on hover */
+  }
+  
+  .footer i {
+    vertical-align: middle;
+    font-size: 35px;
+  }
+  
+  .copyright {
+      font-size: 15px;
+      color: #a9a9a9;
+  }
+  
+  .footer-title {
+      font-size: 17px;
+  }

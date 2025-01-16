@@ -584,22 +584,22 @@ function updateTabTime(mode) {
 function adjustPomotimerPosition() {
     const todoTasks = document.querySelector('.todo-tasks');
     const pomotimerArticle = document.querySelector('#pomotimer-article');
-    
-    // Obtener la altura de .todo-tasks
+    const pomoFooter = document.querySelector('#pomo-footer');
+
+    // Obtener las posiciones dinámicas
     const todoTasksHeight = todoTasks.offsetHeight;
-    
-    // Si la altura de .todo-tasks es mayor que 300px, ajustamos el top de #pomotimer-article
-    if (todoTasksHeight > 300) {
-        // Calculamos la diferencia
-        const extraHeight = todoTasksHeight - 300;
-        
-        // Establecemos el top de #pomotimer-article
-        pomotimerArticle.style.top = `${extraHeight + 730}px`;  // Sumar la diferencia a 300px (base)
-    } else {
-        // Si la altura es menor o igual a 300px, mantenemos el top en su valor original
-        pomotimerArticle.style.top = '730px';
-    }
+    const todoTasksTop = todoTasks.offsetTop; // Altura desde el top de la página
+
+    // Posicionar dinámicamente #pomotimer-article debajo de .todo-tasks
+    const pomotimerArticleTop = todoTasksTop + todoTasksHeight; // Añadimos margen (30px)
+    pomotimerArticle.style.top = `${pomotimerArticleTop}px`;
+
+    // Calcular la posición del footer debajo del artículo
+    const pomotimerArticleHeight = pomotimerArticle.offsetHeight;
+    pomoFooter.style.top = `${pomotimerArticleTop + pomotimerArticleHeight}px`;
 }
+window.onload = adjustPomotimerPosition;
+window.onresize = adjustPomotimerPosition;
 
 // Crear un MutationObserver para detectar cambios en .todo-tasks
 const observer_2 = new MutationObserver(() => {
