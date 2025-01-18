@@ -611,7 +611,7 @@ function adjustPomotimerPosition() {
         const todoTasksHeight = todoTasks.offsetHeight;
         const todoTasksTop = todoTasks.offsetTop;
 
-        const pomotimerArticleTop = todoTasksTop + todoTasksHeight - 1000;
+        const pomotimerArticleTop = todoTasksTop + todoTasksHeight - 2300;
         pomotimerArticle.style.top = `${pomotimerArticleTop}px`;
 
         const pomotimerArticleHeight = pomotimerArticle.offsetHeight;
