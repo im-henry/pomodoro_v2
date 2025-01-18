@@ -580,7 +580,7 @@ function updateTabTime(mode) {
     }
 }
 
-/** Función que ajusta la posición de #pomotimer-article
+/** Función que ajusta la posición de #pomotimer-article */
 function adjustPomotimerPosition() {
     const todoTasks = document.querySelector('.todo-tasks');
     const pomotimerArticle = document.querySelector('#pomotimer-article');
@@ -599,37 +599,7 @@ function adjustPomotimerPosition() {
     pomoFooter.style.top = `${pomotimerArticleTop + pomotimerArticleHeight}px`;
 }
 window.onload = adjustPomotimerPosition;
-window.onresize = adjustPomotimerPosition;*/
-
-function adjustPomotimerPosition() {
-    const todoTasks = document.querySelector('.todo-tasks');
-    const pomotimerArticle = document.querySelector('#pomotimer-article');
-    const pomoFooter = document.querySelector('#pomo-footer');
-
-    if (todoTasks && pomotimerArticle && pomoFooter) {
-        // Calcular las posiciones dinámicas
-        const todoTasksHeight = todoTasks.offsetHeight;
-        const todoTasksTop = todoTasks.offsetTop;
-
-        const pomotimerArticleTop = todoTasksTop + todoTasksHeight - 2900;
-        pomotimerArticle.style.top = `${pomotimerArticleTop}px`;
-
-        const pomotimerArticleHeight = pomotimerArticle.offsetHeight;
-        pomoFooter.style.top = `${pomotimerArticleTop + pomotimerArticleHeight}px`;
-
-        // Forzar un reflow
-        pomoFooter.style.display = 'none';
-        pomoFooter.offsetHeight; // Recalcular
-        pomoFooter.style.display = 'block';
-    }
-}
-
-// Agregar eventos para recálculo dinámico
-window.addEventListener('load', adjustPomotimerPosition);
-window.addEventListener('resize', adjustPomotimerPosition);
-window.addEventListener('orientationchange', adjustPomotimerPosition);
-document.addEventListener('DOMContentLoaded', adjustPomotimerPosition);
-
+window.onresize = adjustPomotimerPosition;
 
 // Crear un MutationObserver para detectar cambios en .todo-tasks
 const observer_2 = new MutationObserver(() => {
