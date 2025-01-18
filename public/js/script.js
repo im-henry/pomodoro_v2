@@ -580,7 +580,7 @@ function updateTabTime(mode) {
     }
 }
 
-/** Función que ajusta la posición de #pomotimer-article */
+/** Función que ajusta la posición de #pomotimer-article
 function adjustPomotimerPosition() {
     const todoTasks = document.querySelector('.todo-tasks');
     const pomotimerArticle = document.querySelector('#pomotimer-article');
@@ -599,7 +599,30 @@ function adjustPomotimerPosition() {
     pomoFooter.style.top = `${pomotimerArticleTop + pomotimerArticleHeight}px`;
 }
 window.onload = adjustPomotimerPosition;
-window.onresize = adjustPomotimerPosition;
+window.onresize = adjustPomotimerPosition;*/
+
+function adjustPomotimerPosition() {
+    const todoTasks = document.querySelector('.todo-tasks');
+    const pomotimerArticle = document.querySelector('#pomotimer-article');
+    const pomoFooter = document.querySelector('#pomo-footer');
+
+    if (todoTasks && pomotimerArticle && pomoFooter) {
+        // Obtener las posiciones dinámicas
+        const todoTasksHeight = todoTasks.offsetHeight;
+        const todoTasksTop = todoTasks.getBoundingClientRect().top + window.scrollY;
+
+        const pomotimerArticleTop = todoTasksTop + todoTasksHeight;
+        pomotimerArticle.style.top = `${pomotimerArticleTop}px`;
+
+        const pomotimerArticleHeight = pomotimerArticle.offsetHeight;
+        pomoFooter.style.top = `${pomotimerArticleTop + pomotimerArticleHeight}px`;
+    }
+}
+
+// Manejar la posición en los eventos clave
+document.addEventListener('DOMContentLoaded', adjustPomotimerPosition); // Para la carga inicial del DOM
+window.addEventListener('orientationchange', adjustPomotimerPosition); // Para cambios de orientación
+
 
 // Crear un MutationObserver para detectar cambios en .todo-tasks
 const observer_2 = new MutationObserver(() => {
