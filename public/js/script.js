@@ -607,21 +607,29 @@ function adjustPomotimerPosition() {
     const pomoFooter = document.querySelector('#pomo-footer');
 
     if (todoTasks && pomotimerArticle && pomoFooter) {
-        // Obtener las posiciones dinámicas
+        // Calcular alturas dinámicas
         const todoTasksHeight = todoTasks.offsetHeight;
         const todoTasksTop = todoTasks.getBoundingClientRect().top + window.scrollY;
 
+        // Ajustar la posición de #pomotimer-article
         const pomotimerArticleTop = todoTasksTop + todoTasksHeight;
         pomotimerArticle.style.top = `${pomotimerArticleTop}px`;
 
+        // Ajustar la posición del footer
         const pomotimerArticleHeight = pomotimerArticle.offsetHeight;
-        pomoFooter.style.top = `${pomotimerArticleTop + pomotimerArticleHeight}px`;
+        const footerTop = pomotimerArticleTop + pomotimerArticleHeight;
+        pomoFooter.style.top = `${footerTop}px`;
+
+        // Forzar reflow para Safari
+        document.body.style.height = `${document.body.offsetHeight}px`;
+        pomoFooter.offsetHeight; // Accede al offsetHeight para asegurar el reflow
     }
 }
 
-// Manejar la posición en los eventos clave
-document.addEventListener('DOMContentLoaded', adjustPomotimerPosition); // Para la carga inicial del DOM
-window.addEventListener('orientationchange', adjustPomotimerPosition); // Para cambios de orientación
+// Escuchar múltiples eventos para asegurar compatibilidad
+['DOMContentLoaded', 'load', 'resize', 'orientationchange'].forEach(event => {
+    window.addEventListener(event, adjustPomotimerPosition);
+});
 
 
 // Crear un MutationObserver para detectar cambios en .todo-tasks
