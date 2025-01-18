@@ -580,7 +580,7 @@ function updateTabTime(mode) {
     }
 }
 
-/** Función que ajusta la posición de #pomotimer-article */
+/** Función que ajusta la posición de #pomotimer-article
 function adjustPomotimerPosition() {
     const todoTasks = document.querySelector('.todo-tasks');
     const pomotimerArticle = document.querySelector('#pomotimer-article');
@@ -599,7 +599,37 @@ function adjustPomotimerPosition() {
     pomoFooter.style.top = `${pomotimerArticleTop + pomotimerArticleHeight}px`;
 }
 window.onload = adjustPomotimerPosition;
-window.onresize = adjustPomotimerPosition;
+window.onresize = adjustPomotimerPosition;*/
+
+function adjustPomotimerPosition() {
+    const todoTasks = document.querySelector('.todo-tasks');
+    const pomotimerArticle = document.querySelector('#pomotimer-article');
+    const pomoFooter = document.querySelector('#pomo-footer');
+
+    if (todoTasks && pomotimerArticle && pomoFooter) {
+        // Obtener las posiciones dinámicas
+        const todoTasksHeight = todoTasks.offsetHeight;
+        const todoTasksTop = todoTasks.offsetTop;
+
+        // Posicionar dinámicamente #pomotimer-article debajo de .todo-tasks
+        const pomotimerArticleTop = todoTasksTop + todoTasksHeight;
+        pomotimerArticle.style.top = `${pomotimerArticleTop}px`;
+
+        // Calcular la posición del footer debajo del artículo
+        const pomotimerArticleHeight = pomotimerArticle.offsetHeight;
+        pomoFooter.style.top = `${pomotimerArticleTop + pomotimerArticleHeight}px`;
+
+        // Forzar un reflow para iOS
+        document.body.offsetHeight;
+    }
+}
+
+// Escuchar eventos para ajustar dinámicamente
+window.addEventListener('load', adjustPomotimerPosition);
+window.addEventListener('resize', adjustPomotimerPosition);
+window.addEventListener('orientationchange', adjustPomotimerPosition);
+document.addEventListener('DOMContentLoaded', adjustPomotimerPosition);
+
 
 // Crear un MutationObserver para detectar cambios en .todo-tasks
 const observer_2 = new MutationObserver(() => {
