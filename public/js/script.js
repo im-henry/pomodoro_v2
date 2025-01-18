@@ -607,24 +607,24 @@ function adjustPomotimerPosition() {
     const pomoFooter = document.querySelector('#pomo-footer');
 
     if (todoTasks && pomotimerArticle && pomoFooter) {
-        // Obtener las posiciones dinámicas
+        // Calcular las posiciones dinámicas
         const todoTasksHeight = todoTasks.offsetHeight;
         const todoTasksTop = todoTasks.offsetTop;
 
-        // Posicionar dinámicamente #pomotimer-article debajo de .todo-tasks
         const pomotimerArticleTop = todoTasksTop + todoTasksHeight;
         pomotimerArticle.style.top = `${pomotimerArticleTop}px`;
 
-        // Calcular la posición del footer debajo del artículo
         const pomotimerArticleHeight = pomotimerArticle.offsetHeight;
         pomoFooter.style.top = `${pomotimerArticleTop + pomotimerArticleHeight}px`;
 
-        // Forzar un reflow para iOS
-        document.body.offsetHeight;
+        // Forzar un reflow
+        pomoFooter.style.display = 'none';
+        pomoFooter.offsetHeight; // Recalcular
+        pomoFooter.style.display = 'block';
     }
 }
 
-// Escuchar eventos para ajustar dinámicamente
+// Agregar eventos para recálculo dinámico
 window.addEventListener('load', adjustPomotimerPosition);
 window.addEventListener('resize', adjustPomotimerPosition);
 window.addEventListener('orientationchange', adjustPomotimerPosition);
