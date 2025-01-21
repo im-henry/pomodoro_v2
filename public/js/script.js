@@ -601,7 +601,7 @@ function adjustPomotimerPosition() {
 window.onload = adjustPomotimerPosition;
 window.onresize = adjustPomotimerPosition;*/
 
-function adjustPomotimerPosition() {
+/*function adjustPomotimerPosition() {
     const todoTasks = document.querySelector('.todo-tasks');
     const pomotimerArticle = document.querySelector('#pomotimer-article');
     const pomoFooter = document.querySelector('#pomo-footer');
@@ -624,7 +624,7 @@ function adjustPomotimerPosition() {
         document.body.style.height = `${document.body.offsetHeight}px`;
         pomoFooter.offsetHeight; // Accede al offsetHeight para asegurar el reflow
     }
-}
+}*/
 
 // Escuchar múltiples eventos para asegurar compatibilidad
 ['DOMContentLoaded', 'load', 'resize', 'orientationchange'].forEach(event => {
