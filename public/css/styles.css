@@ -360,6 +360,7 @@ input[type="number"]::-webkit-outer-spin-button {
     text-align: center;
     justify-content: center;
     overflow: visible;
+    box-sizing: border-box;
 }
 
 .todo-tasks .form {
@@ -776,7 +777,7 @@ input[type="number"]::-webkit-outer-spin-button {
     position: relative;
     /*top: 730px;  Adjust the value to push the article down */
     padding: 20px 0 20px 0;
-    width: 100%;
+    width: 100vw;
     background-color: #f9f9f9;
     color: #333;
     font-family: Arial, sans-serif;
@@ -959,6 +960,10 @@ input[type="number"]::-webkit-outer-spin-button {
 
     .form {
         max-width: 300px;
+    }
+
+    .todo-tasks {
+        padding: 0 15px;
     }
 }
 
