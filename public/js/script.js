@@ -14,7 +14,7 @@ const notifyUser = () => {
 document.querySelectorAll('.play-pause-button').forEach(button => {
     button.addEventListener('click', e => {
         //Sound
-        const audio = new Audio('/media/start_button.mp3');
+        const audio = new Audio('./media/start_button.mp3');
         audio.play().catch(error => {
         console.error("Error playing sound:", error);
         }); 
@@ -49,7 +49,7 @@ document.querySelectorAll('.button-56').forEach((button) => {
             btn.classList.remove('active');
         });
         //Sound
-        const audio = new Audio('/media/button.mp3');
+        const audio = new Audio('./media/button.mp3');
         audio.play().catch(error => {
         console.error("Error playing sound:", error);
         }); 
@@ -213,7 +213,7 @@ document.getElementById('play-timer').addEventListener('click', () => {
                 isPaused = true;
 
                 console.log("Reached 0!!!");
-                const audio = new Audio('/media/bell_sound.mp3');
+                const audio = new Audio('./media/bell_sound.mp3');
                 audio.play().catch(error => {
                     console.error("Error playing sound:", error);
                 });
@@ -255,7 +255,7 @@ document.getElementById('play-timer').addEventListener('click', () => {
 /**Skip button logic */
 document.querySelector('.skip-button').addEventListener('click', () => {
     //Sound
-    const audio = new Audio('/media/skip_button.mp3');
+    const audio = new Audio('./media/skip_button.mp3');
     audio.play().catch(error => {
     console.error("Error playing sound:", error);
     }); 
@@ -406,11 +406,11 @@ function addTaskToList(taskName) {
             <span>${taskName}</span>
             <div class="dropdown">
                 <button class="options-button dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="/public/images/ellipsis-vertical.png" alt="task options">
+                    <img src="./public/images/ellipsis-vertical.png" alt="task options">
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item edit-task" href="#"><img src="/public/images/edit-task.png" alt="edit task">Edit task</a></li>
-                    <li><a class="dropdown-item delete-task" href="#"><img src="/public/images/trash.png" alt="delete task">Delete</a></li>
+                    <li><a class="dropdown-item edit-task" href="#"><img src="./public/images/edit-task.png" alt="edit task">Edit task</a></li>
+                    <li><a class="dropdown-item delete-task" href="#"><img src="./public/images/trash.png" alt="delete task">Delete</a></li>
                 </ul>
             </div>
         </div>
@@ -586,26 +586,6 @@ function adjustPomotimerPosition() {
     const pomotimerArticle = document.querySelector('#pomotimer-article');
     const pomoFooter = document.querySelector('#pomo-footer');
 
-    // Obtener las posiciones dinámicas
-    const todoTasksHeight = todoTasks.offsetHeight;
-    const todoTasksTop = todoTasks.offsetTop; // Altura desde el top de la página
-
-    // Posicionar dinámicamente #pomotimer-article debajo de .todo-tasks
-    const pomotimerArticleTop = todoTasksTop + todoTasksHeight; // Añadimos margen (30px)
-    pomotimerArticle.style.top = `${pomotimerArticleTop}px`;
-
-    // Calcular la posición del footer debajo del artículo
-    const pomotimerArticleHeight = pomotimerArticle.offsetHeight;
-    pomoFooter.style.top = `${pomotimerArticleTop + pomotimerArticleHeight}px`;
-}
-window.onload = adjustPomotimerPosition;
-window.onresize = adjustPomotimerPosition;*/
-
-function adjustPomotimerPosition() {
-    const todoTasks = document.querySelector('.todo-tasks');
-    const pomotimerArticle = document.querySelector('#pomotimer-article');
-    const pomoFooter = document.querySelector('#pomo-footer');
-
     if (todoTasks && pomotimerArticle && pomoFooter) {
         // Calcular alturas dinámicas
         const todoTasksHeight = todoTasks.offsetHeight;
@@ -645,3 +625,5 @@ observer_2.observe(document.querySelector('.todo-tasks'), {
 
 // Llamar a la función al cargar la página por si ya hay tareas
 adjustPomotimerPosition();
+
+**/
