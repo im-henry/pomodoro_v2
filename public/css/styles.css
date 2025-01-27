@@ -15,17 +15,16 @@
 }
 
 html, body {
-    height: 100%;
     margin: 0;
     padding: 0;
-    min-width: 435.2px;
-    max-width: 100vw;
+    min-width: 360px;
+    max-width: 100%;
     background: #d1d468;
 }
 
 body {
     display: flex;
-    height: 100vh;
+    flex-direction: column;
     --spacing: .5rem;
 }
 
@@ -37,21 +36,20 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .main-content {
+    position: relative;
     width: 100%;
-    height: 100vh;
     display: grid;
-    /*grid-template-rows: minmax(100px, 15%) minmax(70px, 10%) minmax(260px, 30%) auto;*/
-    grid-template-rows: 100px 70px 230px;
-    justify-content: center;
-    align-items: center;
+    grid-template-rows: 100px 70px 255px auto;
+    justify-items: center;
+    align-items: start;
     background-color: #d1d468;
     z-index: 0;
 }
 
 .time-controller {
-    width: 110%;
-    margin-left: -5%;
-    padding: 8px 0 0 8px;
+    width: 70%;
+    max-width: 550px;
+    padding: 0;
     grid-row: 3 / 4;
     box-shadow: 0 0 20px rgba(36, 36, 36, 0.5); /* Sombra en el borde exterior */
     background: linear-gradient(131deg, rgba(128,124,186,0.5971638655462185) 3%, rgba(199,200,165,1) 42%, rgba(209,212,104,1) 82%);
@@ -85,7 +83,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
 .container-buttons {
-    width: 100%;
+    width: 81%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -231,10 +229,11 @@ input[type="number"]::-webkit-outer-spin-button {
 /*Header*/
 /* Contenedor principal del header */
 .header-pomo {
-    width: 130%;
-    margin-left: -15%;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
     background-color: #d1d468; /* Fondo amarillo */
-    padding: 10px 20px;
+    padding: 10px 0;
     display: flex;
     align-items: center;
     justify-content: space-between; /* Distribuye logo y botones a los extremos */
@@ -244,7 +243,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* Para el contenedor fluido */
 .container-fluid {
-    width: 100vw;
+    max-width: 40%;
     display: flex;
     justify-content: space-between; /* Asegura que las secciones queden en extremos opuestos */
     align-items: center;
@@ -252,7 +251,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* Sección izquierda (logo) */
 .left-section {
-    flex: 1;
+    flex: 3;
 }
 
 /* Logo */
@@ -262,8 +261,8 @@ input[type="number"]::-webkit-outer-spin-button {
 
 /* Sección derecha (botones) */
 .right-section {
-    display: flex;
-    gap: 0.5em; /* Espaciado entre los botones */
+    flex: 1;
+    text-align: right;
 }
 
 /* Botones */
@@ -346,13 +345,12 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .todo-tasks {
-    position: absolute;
-    top: 430px;
+    position: relative;
+    /*top: 430px;*/
     width: 100%;
     display: grid;
-    /*grid-template-rows: 45px 300px;*/
-    grid-template-rows: 45px min-content 30px;
-    /*height: 300px;*/
+    /*grid-template-rows: 45px min-content 30px;*/
+    grid-template-rows: auto auto auto;
     min-height: 300px;
     background-color: #222;
     padding: 20px 20px 25px 20px;
@@ -775,8 +773,8 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 #pomotimer-article {
-    position:absolute;
-    top: 730px; /* Adjust the value to push the article down */
+    position: relative;
+    /*top: 730px;  Adjust the value to push the article down */
     padding: 20px 0 20px 0;
     width: 100%;
     background-color: #f9f9f9;
@@ -892,21 +890,32 @@ input[type="number"]::-webkit-outer-spin-button {
 /*Media queries*/
 @media (max-width: 768px) {
     .header-pomo {
-        width: 100%; /* Reduce el ancho en pantallas pequeñas */
+        width: 95vw; /* Reduce el ancho en pantallas pequeñas */
         margin-left: 0; /* Elimina el desplazamiento */
+        padding: 10px 0;
     }
     .main-content {
-        max-width: 100vw;
-        height: 100vh;
+        width: 100%;
         display: grid;
-        grid-template-rows: 80px 80px 200px;
-        justify-content: center;
+        grid-template-rows: 80px 70px 240px;
+        justify-items: center;
         align-items: center;
         background-color: #d1d468;
         z-index: 0;
     }
     .button-56 {
-        padding: 0 40px;
+        padding: 0 25px;
+    }
+    .container-buttons {
+        margin: 30px 0 25px 0;
+    }
+    .time-controller {
+        width: 80%;
+        max-width: 430px;
+        margin-left: 0;
+    }
+    .container-fluid {
+        max-width: 100%;
     }
 }
 @media (min-width: 768px) {
@@ -914,21 +923,42 @@ input[type="number"]::-webkit-outer-spin-button {
       padding: 0 40px;
     }
   }
+
+
   @media (min-width: 360px) and (max-width: 460px) {
     .button-56 {
         padding: 0 18px; /* Ajustamos el padding */
-        font-size: 14px;  /* Un poco más pequeño para mejorar la visibilidad */
+        font-size: 16px;  /* Un poco más pequeño para mejorar la visibilidad */
         width: 100%;      /* Aseguramos que el ancho se ajuste */
     }
 
     .time-controller {
         width: 100%;
+        max-width: 355px;
         margin-left: 0;
     }
 
     .main-content {
-        width: 100%;
+        max-width: 100%;
         margin: 0;
+    }
+
+    .header-pomo {
+        width: 95vw; /* Reduce el ancho en pantallas pequeñas */
+        margin-left: 0; /* Elimina el desplazamiento */
+        padding: 10px 0;
+    }
+
+    .container-buttons {
+        margin: 10px 0 10px 0;
+    }
+
+    .container-fluid {
+        max-width: 100%;
+    }
+
+    .form {
+        max-width: 300px;
     }
 }
 
@@ -941,7 +971,8 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .time-controller {
-        width: 100%;
+        width: 80%;
+        max-width: 430px;
         margin-left: 0;
     }
 
@@ -952,6 +983,16 @@ input[type="number"]::-webkit-outer-spin-button {
     .todo-tasks .form {
         width: 100%;
     }
+
+    .header-pomo {
+        width: 95vw; /* Reduce el ancho en pantallas pequeñas */
+        margin-left: 0; /* Elimina el desplazamiento */
+        padding: 10px 0;
+    }
+
+    .container-fluid {
+        max-width: 100%;
+    }
 }
 
 .no-click {
@@ -960,7 +1001,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 #pomo-footer {
-    position: absolute;
+    position: relative;
     width: 100%;
     padding-top: 20px;
     background-color: #2f363e;
