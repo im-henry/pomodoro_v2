@@ -41,11 +41,11 @@ document.querySelectorAll('.button-56').forEach((button) => {
         document.querySelectorAll('.button-56').forEach((btn) => {
             btn.classList.remove('active');
         });
-        /*Sound
+        //Sound
         const audio = new Audio('./media/button.mp3');
         audio.play().catch(error => {
         console.error("Error playing sound:", error);
-        }); */
+        }); 
         //Add active class
         button.classList.add('active');
     });
@@ -206,10 +206,10 @@ document.getElementById('play-timer').addEventListener('click', () => {
                 isPaused = true;
 
                 console.log("Reached 0!!!");
-                /*const audio = new Audio('./media/bell_sound.mp3');
+                const audio = new Audio('./media/bell_sound.mp3');
                 audio.play().catch(error => {
                     console.error("Error playing sound:", error);
-                });*/
+                });
 
             } else {
                 // Calcular minutos y segundos restantes
@@ -246,11 +246,11 @@ document.getElementById('play-timer').addEventListener('click', () => {
 
 /**Skip button logic */
 document.querySelector('.skip-button').addEventListener('click', () => {
-    /*Sound
+    //Sound
     const audio = new Audio('./media/skip_button.mp3');
     audio.play().catch(error => {
     console.error("Error playing sound:", error);
-    }); */
+    });
 
     if (!isPaused) {
         isPaused = true;
