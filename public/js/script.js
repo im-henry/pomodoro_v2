@@ -59,18 +59,22 @@ document.querySelectorAll('.button-56').forEach((button) => {
 });*/
 
 document.querySelectorAll('.button-56').forEach((button) => {
-    button.addEventListener('click', () => {
-        // Remover todas las clases activas
-        document.querySelectorAll('.button-56').forEach((btn) => {
-            btn.classList.remove('active');
-        });
-
-        // Forzar una pequeña pausa antes de añadir la clase activa
-        setTimeout(() => {
-            button.classList.add('active');
-        }, 0);
-    });
+    button.addEventListener('click', handleButtonClick);
+    button.addEventListener('touchstart', handleButtonClick); // Agrega soporte para iOS
 });
+
+function handleButtonClick(event) {
+    // Prevenir el comportamiento predeterminado en eventos táctiles
+    event.preventDefault();
+
+    // Desactiva todas las clases activas
+    document.querySelectorAll('.button-56').forEach((btn) => {
+        btn.classList.remove('active');
+    });
+
+    // Activa el botón clicado
+    event.currentTarget.classList.add('active');
+}
 
 
 /**Modal Pomo Settings aria-label */
