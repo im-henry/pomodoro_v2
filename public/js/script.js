@@ -2,6 +2,18 @@
     Notification.requestPermission(); // Solicitar permiso si no está otorgado
 }*/
 
+try {
+    if (Notification.permission === 'default') {
+        Notification.requestPermission().then(permission => {
+            console.log(`Permiso de notificación: ${permission}`);
+        }).catch(error => {
+            console.error("Error solicitando permiso de notificación:", error);
+        });
+    }
+} catch (error) {
+    console.error("Error general manejando notificaciones:", error);
+}
+
 /**Button by: Copyright (c) 2024 by Aaron Iker (https://codepen.io/aaroniker/pen/abzOdRR) */
 document.querySelectorAll('.play-pause-button').forEach(button => {
     button.addEventListener('click', e => {
