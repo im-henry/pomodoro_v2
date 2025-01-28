@@ -58,36 +58,10 @@ document.querySelectorAll('.button-56').forEach((button) => {
     });
 });*/
 
-document.querySelectorAll('.button-56').forEach((button) => {
-    // Escucha tanto eventos de clic como táctiles
-    button.addEventListener('click', handleButtonClick);
-    button.addEventListener('touchstart', handleButtonClick);
+button.addEventListener('click', () => {
+    console.log(`Clic en: ${button.id}`);
+    button.classList.add('active');
 });
-
-function handleButtonClick(event) {
-    // Previene conflictos entre eventos táctiles y de clic
-    event.preventDefault();
-
-    // Desactiva todas las clases activas
-    document.querySelectorAll('.button-56').forEach((btn) => {
-        btn.classList.remove('active');
-    });
-
-    // Activa el botón clicado
-    event.currentTarget.classList.add('active');
-
-    // Reproduce el sonido si es un evento táctil o de clic válido
-    playSound('./media/button.mp3');
-}
-
-function playSound(src) {
-    const audio = new Audio(src);
-    // Asegura que la reproducción se maneje correctamente en Safari
-    audio.play().catch((error) => {
-        console.error('Error reproduciendo el sonido:', error);
-    });
-}
-
 
 
 /**Modal Pomo Settings aria-label */
