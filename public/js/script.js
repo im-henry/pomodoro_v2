@@ -34,11 +34,7 @@ document.querySelectorAll('.play-pause-button').forEach(button => {
             unlockAudioContext(audioContext);
         }
 
-        // Reproduce el sonido del botón
-        const audio = new Audio('./media/start_button.mp3');
-        audio.play().catch(error => {
-            console.error("Error playing sound:", error);
-        });
+
 
         // Maneja las clases del botón
         if (button.classList.contains('playing')) {
