@@ -60,19 +60,15 @@ document.querySelectorAll('.button-56').forEach((button) => {
 
 document.querySelectorAll('.button-56').forEach((button) => {
     button.addEventListener('click', () => {
-        // Pass all to inactive
+        // Remover todas las clases activas
         document.querySelectorAll('.button-56').forEach((btn) => {
             btn.classList.remove('active');
         });
 
-        // Add active class
-        button.classList.add('active');
-        
-        // // Sound (desactivado temporalmente)
-        // const audio = new Audio('./media/button.mp3');
-        // audio.play().catch(error => {
-        //     console.error("Error playing sound:", error);
-        // });
+        // Forzar una pequeña pausa antes de añadir la clase activa
+        setTimeout(() => {
+            button.classList.add('active');
+        }, 0);
     });
 });
 
