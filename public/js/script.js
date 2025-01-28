@@ -1,6 +1,6 @@
-/*if (Notification.permission === 'default') {
+if (Notification.permission === 'default') {
     Notification.requestPermission(); // Solicitar permiso si no está otorgado
-}*/
+}
 
 /**Button by: Copyright (c) 2024 by Aaron Iker (https://codepen.io/aaroniker/pen/abzOdRR) */
 document.querySelectorAll('.play-pause-button').forEach(button => {
