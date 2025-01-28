@@ -33,7 +33,7 @@ function pause_button() {
     }
 }
 
-/**Time settings buttons */
+/**Time settings buttons 
 document.querySelectorAll('.button-56').forEach((button) => {
     button.addEventListener('click', () => {
         //Pass all to inactive
@@ -47,6 +47,21 @@ document.querySelectorAll('.button-56').forEach((button) => {
         }); 
         //Add active class
         button.classList.add('active');
+    });
+});*/
+
+document.querySelectorAll('.button-56').forEach((button) => {
+    button.addEventListener('click', () => {
+        // Desactiva todas las clases activas
+        document.querySelectorAll('.button-56').forEach((btn) => {
+            btn.classList.remove('active');
+        });
+
+        // Añade la clase activa
+        button.classList.add('active');
+
+        // Fuerza un reflujo
+        button.offsetHeight; // Esto asegura que el navegador aplique el cambio
     });
 });
 
