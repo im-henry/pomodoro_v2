@@ -41,7 +41,7 @@ function pause_button() {
     }
 }
 
-/**Time settings buttons */
+/**Time settings buttons 
 document.querySelectorAll('.button-56').forEach((button) => {
     button.addEventListener('click', () => {
         //Pass all to inactive
@@ -56,7 +56,26 @@ document.querySelectorAll('.button-56').forEach((button) => {
         //Add active class
         button.classList.add('active');
     });
+});*/
+
+document.querySelectorAll('.button-56').forEach((button) => {
+    button.addEventListener('click', () => {
+        // Pass all to inactive
+        document.querySelectorAll('.button-56').forEach((btn) => {
+            btn.classList.remove('active');
+        });
+
+        // Add active class
+        button.classList.add('active');
+        
+        // // Sound (desactivado temporalmente)
+        // const audio = new Audio('./media/button.mp3');
+        // audio.play().catch(error => {
+        //     console.error("Error playing sound:", error);
+        // });
+    });
 });
+
 
 /**Modal Pomo Settings aria-label */
 const modal = document.getElementById('pomo-settings');
