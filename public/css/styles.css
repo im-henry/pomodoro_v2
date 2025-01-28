@@ -327,16 +327,17 @@ input[type="number"]::-webkit-outer-spin-button {
   transform: translate(0, 0);
 }
 
-.button-56:active {
+/*.button-56:active {
   background-color: #c6bdbc;
   outline: 0;
-}
+}*/
 
 .button-56:hover {
   outline: 0;
 }
 
 .button-56.active {
+    outline: 0;
     background-color: #d6eeb0;
     border-color: rgb(118, 158, 106);
     border-width: 3px;
