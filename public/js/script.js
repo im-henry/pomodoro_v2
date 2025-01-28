@@ -2,14 +2,6 @@ if (Notification.permission === 'default') {
     Notification.requestPermission(); // Solicitar permiso si no está otorgado
 }
 
-const notifyUser = () => {
-    if (Notification.permission === 'granted') {
-        new Notification('¡Tiempo completado!', {
-            body: 'Tu tiempo Pomodoro ha terminado.',
-        });
-    }
-};
-
 /**Button by: Copyright (c) 2024 by Aaron Iker (https://codepen.io/aaroniker/pen/abzOdRR) */
 document.querySelectorAll('.play-pause-button').forEach(button => {
     button.addEventListener('click', e => {
@@ -41,7 +33,7 @@ function pause_button() {
     }
 }
 
-/**Time settings buttons 
+/**Time settings buttons */
 document.querySelectorAll('.button-56').forEach((button) => {
     button.addEventListener('click', () => {
         //Pass all to inactive
@@ -56,13 +48,7 @@ document.querySelectorAll('.button-56').forEach((button) => {
         //Add active class
         button.classList.add('active');
     });
-});*/
-
-button.addEventListener('click', () => {
-    console.log(`Clic en: ${button.id}`);
-    button.classList.add('active');
 });
-
 
 /**Modal Pomo Settings aria-label */
 const modal = document.getElementById('pomo-settings');
@@ -223,7 +209,6 @@ document.getElementById('play-timer').addEventListener('click', () => {
                 audio.play().catch(error => {
                     console.error("Error playing sound:", error);
                 });
-                notifyUser(); // Enviar notificación como respaldo
 
             } else {
                 // Calcular minutos y segundos restantes
